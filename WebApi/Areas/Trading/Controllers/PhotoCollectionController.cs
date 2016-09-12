@@ -124,6 +124,20 @@ namespace WebApi.Areas.Trading.Controllers
         }
 
         [HttpGet]
+        public IHttpActionResult CheckStatus (int UID,int PhotoCollectionID){
+            WebApi_BLL.T_Photo_Likes tpl_bll = new WebApi_BLL.T_Photo_Likes();
+            WebApi_BLL.T_Photo_Store tps_bll = new WebApi_BLL.T_Photo_Store();
+            bool IsLike = tpl_bll.Exists(UID, PhotoCollectionID);
+            bool IsStore = tps_bll.Exists(UID, PhotoCollectionID);
+            ArrayList list = new ArrayList();
+            Hashtable ht = new Hashtable();
+            ht.Add("IsLike", IsLike);
+            ht.Add("IsStore", IsStore);
+            list.Add(ht);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", list));
+        }
+
+        [HttpGet]
         public IHttpActionResult GetUserStoreByUID(int UID) {
             WebApi_BLL.T_Photo_Store tps_bll = new WebApi_BLL.T_Photo_Store();
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", tps_bll.GetModelList("UID=" + UID)));
