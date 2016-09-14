@@ -63,7 +63,7 @@ namespace WebApi.Areas.Trading.Controllers
             WebApi_Model.T_User user = bll.Login(strUsername, strPassword);
             if (user == null)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "找不到用户", user));
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "找不到用户", JsonConvert.SerializeObject(user)));
             }
 
             if (user.IsOnLine != 1)
@@ -71,10 +71,10 @@ namespace WebApi.Areas.Trading.Controllers
                 user.IsOnLine = 1;
                 user.LastLoginDate = DateTime.Now;
                 bll.Update(user);
-                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", user));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(user)));
             }
             else {
-                return Ok(ReturnJsonResult.GetJsonResult(1, "该用户正在被使用", user));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "该用户正在被使用", JsonConvert.SerializeObject(user)));
             }
 
             
@@ -113,9 +113,9 @@ namespace WebApi.Areas.Trading.Controllers
             user.UID = uid;
 
             if (user.UID.ToString() != "")
-                return Ok(ReturnJsonResult.GetJsonResult(1, "注册成功！", user));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "注册成功！", JsonConvert.SerializeObject(user)));
             else
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "注册失败！", user)); 
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "注册失败！", JsonConvert.SerializeObject(user))); 
         }
 
         [HttpPost]
@@ -132,7 +132,7 @@ namespace WebApi.Areas.Trading.Controllers
                 file.SaveAs(savePath);
                 if (bll.UpdateAvatar(uid, newName))
                 {
-                    return Ok(ReturnJsonResult.GetJsonResult(1, "Succeed！", newName));
+                    return Ok(ReturnJsonResult.GetJsonResult(1, "Succeed！", JsonConvert.SerializeObject(newName)));
                 }
                 else
                 {
@@ -199,7 +199,7 @@ namespace WebApi.Areas.Trading.Controllers
                 model.CodeID = bllsmscode.Add(model);
                 //暂不发送短信
                 //SMSHelper.SendSMS(model.Tel, strMessage, new string[] { model.Code, "30" });
-                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", model));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
             }
             catch(Exception ex) {
                 return Ok(ReturnJsonResult.GetJsonResult(-1, "Faild！", ex.Message));

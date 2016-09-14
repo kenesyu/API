@@ -26,11 +26,11 @@ namespace WebApi.Areas.Trading.Controllers
                 T_UserAddress useraddress = (T_UserAddress)Newtonsoft.Json.JsonConvert.DeserializeObject(model, typeof(T_UserAddress));
                 int id = bll.Add(useraddress);
                 useraddress.AddressID = id;
-                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", useraddress));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(useraddress)));
             }
             catch (Exception ex)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, ex.Message.ToString(), model));
+                return Ok(ReturnJsonResult.GetJsonResult(-1, ex.Message.ToString(),JsonConvert.SerializeObject(model)));
             }
         }
 
@@ -41,11 +41,11 @@ namespace WebApi.Areas.Trading.Controllers
             {
                 T_UserAddress useraddress = (T_UserAddress)Newtonsoft.Json.JsonConvert.DeserializeObject(model, typeof(T_UserAddress));
                 bool falg = bll.Update(useraddress);
-                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", useraddress));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(useraddress)));
             }
             catch (Exception ex)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, ex.Message.ToString(), model));
+                return Ok(ReturnJsonResult.GetJsonResult(-1, ex.Message.ToString(), JsonConvert.SerializeObject(model)));
             }
         } 
 
@@ -73,7 +73,7 @@ namespace WebApi.Areas.Trading.Controllers
                 List<T_UserAddress> list = bll.GetModelList(strWhere);
                 //int AddressID = int.Parse(requestHelper.GetRequsetForm("AddressID", ""));
                 //bool falg = bll.Delete(AddressID);
-                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", list));
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
             }
             catch (Exception ex)
             {

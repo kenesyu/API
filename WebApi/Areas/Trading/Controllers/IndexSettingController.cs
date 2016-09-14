@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Newtonsoft.Json;
 using WebApi_Common;
 
 namespace WebApi.Areas.Trading.Controllers
@@ -15,7 +16,7 @@ namespace WebApi.Areas.Trading.Controllers
         [HttpGet]
         public IHttpActionResult GetBackGround()
         {
-            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", bll.GetModelList("")));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList(""))));
         }
 
     }

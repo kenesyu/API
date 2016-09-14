@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Newtonsoft.Json;
 using WebApi_Common;
 
 namespace WebApi.Areas.Trading.Controllers
@@ -33,7 +34,7 @@ namespace WebApi.Areas.Trading.Controllers
                 User = bllUserRecharge.UserRecharge(User, RechargeType);
             }
 
-            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", User));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(User)));
         }
 
         #endregion

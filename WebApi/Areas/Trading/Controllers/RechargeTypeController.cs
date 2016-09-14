@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Newtonsoft.Json;
 using WebApi_Common;
 
 namespace WebApi.Areas.Trading.Controllers
@@ -21,7 +22,7 @@ namespace WebApi.Areas.Trading.Controllers
             {
                 return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", list));
             }
-            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", list));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
         }
 
         [HttpGet]
@@ -30,9 +31,9 @@ namespace WebApi.Areas.Trading.Controllers
             WebApi_Model.T_RechargeType T_RechargeType = bll.GetModel(RechargeID);
             if (T_RechargeType == null)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", T_RechargeType));
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", JsonConvert.SerializeObject(T_RechargeType)));
             }
-            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", T_RechargeType));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(T_RechargeType)));
         } 
         #endregion
     }

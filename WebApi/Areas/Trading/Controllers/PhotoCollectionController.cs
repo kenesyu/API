@@ -8,6 +8,7 @@ using System.Web.Http;
 using WebApi_Common;
 using WebApi_DBUtility;
 using System.Data.SqlClient;
+using Newtonsoft.Json;
 
 namespace WebApi.Areas.Trading.Controllers
 {
@@ -34,7 +35,7 @@ namespace WebApi.Areas.Trading.Controllers
             List<WebApi_Model.T_Photo_Collection> list = bll.DataTableToList(DBHelper.GetListByPage("V_Photo_Collection", Page, PageSize, strWhere, strOrder, out TotalPage).Tables[0]);
             if (list != null)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(1, TotalPage.ToString(), list));
+                return Ok(ReturnJsonResult.GetJsonResult(1, TotalPage.ToString(), JsonConvert.SerializeObject(list)));
             }
             else
             {
@@ -46,7 +47,7 @@ namespace WebApi.Areas.Trading.Controllers
         public IHttpActionResult GetProductCategoryByType(int ParentID)
         {
             WebApi_BLL.T_Product_Category bll = new WebApi_BLL.T_Product_Category();
-            return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", bll.GetModelList(" ParentID =" + ParentID)));
+            return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", JsonConvert.SerializeObject(bll.GetModelList(" ParentID =" + ParentID))));
         }
 
         [HttpGet]
@@ -64,7 +65,7 @@ namespace WebApi.Areas.Trading.Controllers
         [HttpGet]
         public IHttpActionResult GetDetailsByID(int PhotoCollectionID)
         {
-            return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", bll.GetModel(PhotoCollectionID)));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModel(PhotoCollectionID))));
         }
 
         [HttpPost]
@@ -124,23 +125,27 @@ namespace WebApi.Areas.Trading.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult CheckStatus (int UID,int PhotoCollectionID){
+        public IHttpActionResult CheckStatus(int UID, int PhotoCollectionID)
+        {
             WebApi_BLL.T_Photo_Likes tpl_bll = new WebApi_BLL.T_Photo_Likes();
             WebApi_BLL.T_Photo_Store tps_bll = new WebApi_BLL.T_Photo_Store();
+            WebApi_BLL.T_Photo_Pay tppbll = new WebApi_BLL.T_Photo_Pay();
             bool IsLike = tpl_bll.Exists(UID, PhotoCollectionID);
             bool IsStore = tps_bll.Exists(UID, PhotoCollectionID);
+            bool IsBuy = tps_bll.Exists(UID, PhotoCollectionID);
             ArrayList list = new ArrayList();
             Hashtable ht = new Hashtable();
             ht.Add("IsLike", IsLike);
             ht.Add("IsStore", IsStore);
+            ht.Add("IsBuy", IsBuy);
             list.Add(ht);
-            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", list));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
         }
 
         [HttpGet]
         public IHttpActionResult GetUserStoreByUID(int UID) {
             WebApi_BLL.T_Photo_Store tps_bll = new WebApi_BLL.T_Photo_Store();
-            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", tps_bll.GetModelList("UID=" + UID)));
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(tps_bll.GetModelList("UID=" + UID))));
         }
 
         [HttpPost]
