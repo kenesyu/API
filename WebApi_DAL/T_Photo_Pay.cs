@@ -15,6 +15,21 @@ namespace WebApi_DAL
         { }
         #region  BasicMethod
 
+        public bool Exists(int UID, int PhotoCollectionID)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select count(1) from T_Photo_Pay");
+            strSql.Append(" where UID=@UID and PhotoCollectionID=@PhotoCollectionID");
+            SqlParameter[] parameters = {
+					new SqlParameter("@UID", SqlDbType.Int,4),
+					new SqlParameter("@PhotoCollectionID", SqlDbType.Int,4)	};
+            parameters[0].Value = UID;
+            parameters[1].Value = PhotoCollectionID;
+
+
+            return DBHelper.Exists(strSql.ToString(), parameters);
+        }
+
 
         /// <summary>
         /// 增加一条数据

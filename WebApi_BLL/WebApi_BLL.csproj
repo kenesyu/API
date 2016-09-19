@@ -64,7 +64,7 @@
     <Compile Include="T_Photo_Likes.cs" />
     <Compile Include="T_Photo_Collection.cs" />
     <Compile Include="T_Photo_Details.cs" />
-    <Compile Include="T_PhotoTag.cs" />
+    <Compile Include="T_Photo_Tag.cs" />
     <Compile Include="T_IndexBackGround.cs" />
     <Compile Include="T_Product_Category.cs" />
     <Compile Include="T_Product_Property.cs" />

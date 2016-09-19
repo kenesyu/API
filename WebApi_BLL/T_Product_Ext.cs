@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
-
 using WebApi_Model;
 namespace WebApi_BLL
 {
     /// <summary>
-    /// T_Product_Ext
+    /// 商品扩展
     /// </summary>
     public partial class T_Product_Ext
     {
@@ -14,18 +13,11 @@ namespace WebApi_BLL
         public T_Product_Ext()
         { }
         #region  BasicMethod
-        /// <summary>
-        /// 是否存在该记录
-        /// </summary>
-        public bool Exists(int ProductID, decimal Price, int PropertyA, int PropertyB, int PropertyC, int Stock)
-        {
-            return dal.Exists(ProductID, Price, PropertyA, PropertyB, PropertyC, Stock);
-        }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(WebApi_Model.T_Product_Ext model)
+        public int Add(WebApi_Model.T_Product_Ext model)
         {
             return dal.Add(model);
         }
@@ -41,19 +33,19 @@ namespace WebApi_BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ProductID, decimal Price, int PropertyA, int PropertyB, int PropertyC, int Stock)
+        public bool Delete(int ProductExtID)
         {
 
-            return dal.Delete(ProductID, Price, PropertyA, PropertyB, PropertyC, Stock);
+            return dal.Delete(ProductExtID);
         }
+
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext GetModel(int ProductID, decimal Price, int PropertyA, int PropertyB, int PropertyC, int Stock)
+        public WebApi_Model.T_Product_Ext GetModel(int ProductExtID)
         {
-
-            return dal.GetModel(ProductID, Price, PropertyA, PropertyB, PropertyC, Stock);
+            return dal.GetModel(ProductExtID);
         }
 
         /// <summary>

@@ -54,8 +54,8 @@ namespace WebApi_BLL
                 WebApi_BLL.T_Product_Tag tpg_bll = new T_Product_Tag();
                 WebApi_BLL.T_Product_Category tpc_bll = new T_Product_Category();
                 product.Product_Tag = tpg_bll.GetModelList(" tagID in (0" + product.TagID + ")");
-                product.CategoryName1 = tpc_bll.GetModel(product.Category1).CategoryName;
-                product.CategoryName2 = tpc_bll.GetModel(product.Category2).CategoryName;
+                product.CategoryName1 = tpc_bll.GetModel(Convert.ToInt32(product.Category1)).CategoryName;
+                product.CategoryName2 = tpc_bll.GetModel(Convert.ToInt32(product.Category2)).CategoryName;
 
                 if (!Lazy)
                 {

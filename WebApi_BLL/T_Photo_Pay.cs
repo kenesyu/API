@@ -23,6 +23,10 @@ namespace WebApi_BLL
             return dal.Add(model);
         }
 
+        public bool Exists(int UID,int PhotoCollectionID){
+            return dal.Exists(UID, PhotoCollectionID);
+        }                                                                                
+
         /// <summary>
         /// 更新一条数据
         /// </summary>

@@ -3,7 +3,6 @@ using System.Data;
 using System.Text;
 using System.Data.SqlClient;
 using WebApi_DBUtility;
-using System.Collections.Generic;
 
 namespace WebApi_DAL
 {
@@ -24,40 +23,39 @@ namespace WebApi_DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into T_Product(");
-            strSql.Append("ProductName,Descriptions,TagID,RefProductID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew)");
+            strSql.Append("ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume)");
             strSql.Append(" values (");
-            strSql.Append("@ProductName,@Descriptions,@TagID,@RefProductID,@Category1,@Category2,@LowPrice,@OnSale,@IsHot,@IsNew)");
+            strSql.Append("@ProductName,@Descriptions,@TagID,@RefProductID,@RefPhotoID,@Category1,@Category2,@LowPrice,@OnSale,@IsHot,@IsNew,@CoverPhoto,@CreateDate,@SalesVolume)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-				new SqlParameter("@ProductName", SqlDbType.NVarChar,50),
-				new SqlParameter("@Descriptions", SqlDbType.NVarChar,400),
-				new SqlParameter("@TagID", SqlDbType.NVarChar,50),
-				new SqlParameter("@RefProductID", SqlDbType.NVarChar,50),
-                new SqlParameter("@Category1",SqlDbType.Int,4), 
-                new SqlParameter("@Category2",SqlDbType.Int,4),
-                new SqlParameter("@LowPrice",SqlDbType.Decimal,9),
-                new SqlParameter("@OnSale",SqlDbType.Int,4),
-                new SqlParameter("@IsHot",SqlDbType.Int,4),
-                new SqlParameter("@IsNew",SqlDbType.Int,4),
-                new SqlParameter("@CoverPhoto",SqlDbType.NVarChar,50),
-                new SqlParameter("@CreateDate",SqlDbType.DateTime),
-                new SqlParameter("@SalesVolume",SqlDbType.Int,4)
-            };
-                                        
-                                        
+					new SqlParameter("@ProductName", SqlDbType.NVarChar,50),
+					new SqlParameter("@Descriptions", SqlDbType.NVarChar,400),
+					new SqlParameter("@TagID", SqlDbType.NVarChar,50),
+					new SqlParameter("@RefProductID", SqlDbType.NVarChar,50),
+					new SqlParameter("@RefPhotoID", SqlDbType.NVarChar,50),
+					new SqlParameter("@Category1", SqlDbType.Int,4),
+					new SqlParameter("@Category2", SqlDbType.Int,4),
+					new SqlParameter("@LowPrice", SqlDbType.Decimal,9),
+					new SqlParameter("@OnSale", SqlDbType.Int,4),
+					new SqlParameter("@IsHot", SqlDbType.Int,4),
+					new SqlParameter("@IsNew", SqlDbType.Int,4),
+					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
+					new SqlParameter("@CreateDate", SqlDbType.DateTime),
+					new SqlParameter("@SalesVolume", SqlDbType.Int,4)};
             parameters[0].Value = model.ProductName;
             parameters[1].Value = model.Descriptions;
             parameters[2].Value = model.TagID;
             parameters[3].Value = model.RefProductID;
-            parameters[4].Value = model.Category1;
-            parameters[5].Value = model.Category2;
-            parameters[6].Value = model.LowPrice;
-            parameters[7].Value = model.OnSale;
-            parameters[8].Value = model.IsHot;
-            parameters[9].Value = model.IsNew;
-            parameters[10].Value = model.CoverPhoto;
-            parameters[11].Value = model.CreateDate;
-            parameters[12].Value = model.SalesVolume;
+            parameters[4].Value = model.RefPhotoID;
+            parameters[5].Value = model.Category1;
+            parameters[6].Value = model.Category2;
+            parameters[7].Value = model.LowPrice;
+            parameters[8].Value = model.OnSale;
+            parameters[9].Value = model.IsHot;
+            parameters[10].Value = model.IsNew;
+            parameters[11].Value = model.CoverPhoto;
+            parameters[12].Value = model.CreateDate;
+            parameters[13].Value = model.SalesVolume;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -80,41 +78,49 @@ namespace WebApi_DAL
             strSql.Append("Descriptions=@Descriptions,");
             strSql.Append("TagID=@TagID,");
             strSql.Append("RefProductID=@RefProductID,");
+            strSql.Append("RefPhotoID=@RefPhotoID,");
             strSql.Append("Category1=@Category1,");
-            strSql.Append("Category2=@Category2");
+            strSql.Append("Category2=@Category2,");
             strSql.Append("LowPrice=@LowPrice,");
             strSql.Append("OnSale=@OnSale,");
             strSql.Append("IsHot=@IsHot,");
             strSql.Append("IsNew=@IsNew,");
-            strSql.Append("CoverPhoto=@CoverPhoto");
+            strSql.Append("CoverPhoto=@CoverPhoto,");
+            strSql.Append("CreateDate=@CreateDate,");
+            strSql.Append("SalesVolume=@SalesVolume");
             strSql.Append(" where ProductID=@ProductID");
             SqlParameter[] parameters = {
-				new SqlParameter("@ProductName", SqlDbType.NVarChar,50),
-				new SqlParameter("@Descriptions", SqlDbType.NVarChar,400),
-				new SqlParameter("@TagID", SqlDbType.NVarChar,50),
-				new SqlParameter("@RefProductID", SqlDbType.NVarChar,50),
-                new SqlParameter("@Category1",SqlDbType.Int,4), 
-                new SqlParameter("@Category2",SqlDbType.Int,4),
-                new SqlParameter("@LowPrice", SqlDbType.Decimal,9),
-				new SqlParameter("@OnSale", SqlDbType.Int,4),
-				new SqlParameter("@IsHot", SqlDbType.Int,4),
-				new SqlParameter("@IsNew", SqlDbType.Int,4),
-                new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
-				new SqlParameter("@ProductID", SqlDbType.Int,4)};
-
-
+					new SqlParameter("@ProductName", SqlDbType.NVarChar,50),
+					new SqlParameter("@Descriptions", SqlDbType.NVarChar,400),
+					new SqlParameter("@TagID", SqlDbType.NVarChar,50),
+					new SqlParameter("@RefProductID", SqlDbType.NVarChar,50),
+					new SqlParameter("@RefPhotoID", SqlDbType.NVarChar,50),
+					new SqlParameter("@Category1", SqlDbType.Int,4),
+					new SqlParameter("@Category2", SqlDbType.Int,4),
+					new SqlParameter("@LowPrice", SqlDbType.Decimal,9),
+					new SqlParameter("@OnSale", SqlDbType.Int,4),
+					new SqlParameter("@IsHot", SqlDbType.Int,4),
+					new SqlParameter("@IsNew", SqlDbType.Int,4),
+					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
+					new SqlParameter("@CreateDate", SqlDbType.DateTime),
+					new SqlParameter("@SalesVolume", SqlDbType.Int,4),
+					new SqlParameter("@ProductID", SqlDbType.Int,4)};
             parameters[0].Value = model.ProductName;
             parameters[1].Value = model.Descriptions;
             parameters[2].Value = model.TagID;
             parameters[3].Value = model.RefProductID;
-            parameters[4].Value = model.Category1;
-            parameters[5].Value = model.Category2;
-            parameters[6].Value = model.LowPrice;
-            parameters[7].Value = model.OnSale;
-            parameters[8].Value = model.IsHot;
-            parameters[9].Value = model.IsNew;
-            parameters[10].Value = model.CoverPhoto;
-            parameters[11].Value = model.ProductID;
+            parameters[4].Value = model.RefPhotoID;
+            parameters[5].Value = model.Category1;
+            parameters[6].Value = model.Category2;
+            parameters[7].Value = model.LowPrice;
+            parameters[8].Value = model.OnSale;
+            parameters[9].Value = model.IsHot;
+            parameters[10].Value = model.IsNew;
+            parameters[11].Value = model.CoverPhoto;
+            parameters[12].Value = model.CreateDate;
+            parameters[13].Value = model.SalesVolume;
+            parameters[14].Value = model.ProductID;
+
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
             {
@@ -177,7 +183,7 @@ namespace WebApi_DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ProductID,ProductName,Descriptions,TagID,RefProductID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume from T_Product ");
+            strSql.Append("select  top 1 ProductID,ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume from T_Product ");
             strSql.Append(" where ProductID=@ProductID");
             SqlParameter[] parameters = {
 					new SqlParameter("@ProductID", SqlDbType.Int,4)
@@ -225,6 +231,10 @@ namespace WebApi_DAL
                 {
                     model.RefProductID = row["RefProductID"].ToString();
                 }
+                if (row["RefPhotoID"] != null)
+                {
+                    model.RefPhotoID = row["RefPhotoID"].ToString();
+                }
                 if (row["Category1"] != null && row["Category1"].ToString() != "")
                 {
                     model.Category1 = int.Parse(row["Category1"].ToString());
@@ -249,17 +259,14 @@ namespace WebApi_DAL
                 {
                     model.IsNew = int.Parse(row["IsNew"].ToString());
                 }
-
-                if (row["CoverPhoto"] != null && row["CoverPhoto"].ToString() != "")
+                if (row["CoverPhoto"] != null)
                 {
                     model.CoverPhoto = row["CoverPhoto"].ToString();
                 }
-
                 if (row["CreateDate"] != null && row["CreateDate"].ToString() != "")
                 {
                     model.CreateDate = DateTime.Parse(row["CreateDate"].ToString());
                 }
-
                 if (row["SalesVolume"] != null && row["SalesVolume"].ToString() != "")
                 {
                     model.SalesVolume = int.Parse(row["SalesVolume"].ToString());
@@ -274,7 +281,7 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select * ");
+            strSql.Append("select ProductID,ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume ");
             strSql.Append(" FROM T_Product ");
             if (strWhere.Trim() != "")
             {
@@ -294,7 +301,7 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" * ");
+            strSql.Append(" ProductID,ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume ");
             strSql.Append(" FROM T_Product ");
             if (strWhere.Trim() != "")
             {
@@ -351,24 +358,6 @@ namespace WebApi_DAL
             return DBHelper.Query(strSql.ToString());
         }
 
-
-        //public DataSet GetListByPage(int Page, int PageSize, string strWhere, string strOrder, out int TotalPage)
-        //{
-        //    SqlParameter[] splist = new SqlParameter[]{
-        //        new SqlParameter("@TableName","T_Product"),
-        //        new SqlParameter("@ReFieldsStr","*"),
-        //        new SqlParameter("@OrderString",strOrder),
-        //        new SqlParameter("@WhereString",strWhere),
-        //        new SqlParameter("@PageSize",PageSize),
-        //        new SqlParameter("@PageIndex",Page),
-        //        new SqlParameter("@TotalRecord",ParameterDirection.Output)
-        //    };
-        //    splist[6].Direction = ParameterDirection.Output;
-        //    DataSet ds = DBHelper.RunProcedure("Proc_ShowList", splist, "table");
-        //    TotalPage = Convert.ToInt32(splist[6].Value.ToString());
-        //    return ds;
-        //}
-
         /*
         /// <summary>
         /// 分页获取数据列表
@@ -395,7 +384,6 @@ namespace WebApi_DAL
         }*/
 
         #endregion  BasicMethod
-
         #region  ExtensionMethod
 
         #endregion  ExtensionMethod

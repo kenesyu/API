@@ -2,7 +2,7 @@
 namespace WebApi_Model
 {
     /// <summary>
-    /// T_Product_Ext:实体类(属性说明自动提取数据库字段的描述信息)
+    /// 商品扩展
     /// </summary>
     [Serializable]
     public partial class T_Product_Ext
@@ -10,7 +10,8 @@ namespace WebApi_Model
         public T_Product_Ext()
         { }
         #region Model
-        private int _productid;
+        private int _productextid;
+        private int? _productid;
         private decimal? _price;
         private int? _propertya;
         private int? _propertyb;
@@ -19,7 +20,15 @@ namespace WebApi_Model
         /// <summary>
         /// 
         /// </summary>
-        public int ProductID
+        public int ProductExtID
+        {
+            set { _productextid = value; }
+            get { return _productextid; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? ProductID
         {
             set { _productid = value; }
             get { return _productid; }

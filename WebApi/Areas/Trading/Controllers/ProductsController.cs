@@ -67,7 +67,6 @@ namespace WebApi.Areas.Trading.Controllers
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList(" ParentID = " + ParentID))));
         }
 
-
         #endregion
 
 

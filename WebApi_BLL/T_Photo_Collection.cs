@@ -84,7 +84,7 @@ namespace WebApi_BLL
             if (rowsCount > 0)
             {
                 WebApi_Model.T_Photo_Collection model;
-                WebApi_BLL.T_PhotoTag tagbll = new T_PhotoTag();
+                WebApi_BLL.T_Photo_Tag tagbll = new T_Photo_Tag();
                 for (int n = 0; n < rowsCount; n++)
                 {
                     

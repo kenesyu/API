@@ -40,3 +40,4 @@ C:\Work\臭皮匠\API\WebApi_DBUtility\bin\Debug\zh-Hans\System.Net.Http.Formatt
 C:\Work\臭皮匠\API\WebApi_DBUtility\bin\Debug\zh-Hans\System.Web.Http.resources.dll
 C:\Work\臭皮匠\API\WebApi_DBUtility\obj\Debug\WebApi_DBUtility.dll
 C:\Work\臭皮匠\API\WebApi_DBUtility\obj\Debug\WebApi_DBUtility.pdb
+C:\Work\臭皮匠\API\WebApi_DBUtility\obj\Debug\WebApi_DBUtility.csprojResolveAssemblyReference.cache

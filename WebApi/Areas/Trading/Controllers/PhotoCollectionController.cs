@@ -10,6 +10,7 @@ using WebApi_DBUtility;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
 
+
 namespace WebApi.Areas.Trading.Controllers
 {
     public class PhotoCollectionController : ApiController
@@ -129,10 +130,10 @@ namespace WebApi.Areas.Trading.Controllers
         {
             WebApi_BLL.T_Photo_Likes tpl_bll = new WebApi_BLL.T_Photo_Likes();
             WebApi_BLL.T_Photo_Store tps_bll = new WebApi_BLL.T_Photo_Store();
-            WebApi_BLL.T_Photo_Pay tppbll = new WebApi_BLL.T_Photo_Pay();
+            WebApi_BLL.T_Photo_Pay tpp_bll = new WebApi_BLL.T_Photo_Pay();
             bool IsLike = tpl_bll.Exists(UID, PhotoCollectionID);
             bool IsStore = tps_bll.Exists(UID, PhotoCollectionID);
-            bool IsBuy = tps_bll.Exists(UID, PhotoCollectionID);
+            bool IsBuy = tpp_bll.Exists(UID, PhotoCollectionID);
             ArrayList list = new ArrayList();
             Hashtable ht = new Hashtable();
             ht.Add("IsLike", IsLike);
@@ -189,7 +190,7 @@ namespace WebApi.Areas.Trading.Controllers
                                 new SqlParameter("@photoCollectionID",PhotoCollectionID),new SqlParameter("@UID",UID),new SqlParameter("@PayWay",PayWay),new SqlParameter("@PayValue",photomodel.PiaoZi),
                             });
                             DBHelper.ExecuteSqlTranWithIndentity(newSqlList);
-                            return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", "瞟资不足"));
+                            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
                         }
                         else
                         {
@@ -208,7 +209,7 @@ namespace WebApi.Areas.Trading.Controllers
                                 new SqlParameter("@photoCollectionID",PhotoCollectionID),new SqlParameter("@UID",UID),new SqlParameter("@PayWay",PayWay),new SqlParameter("@PayValue",photomodel.TuiMao),
                             });
                             DBHelper.ExecuteSqlTranWithIndentity(newSqlList);
-                            return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", true));
+                            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
                         }
                         else
                         {
@@ -224,6 +225,12 @@ namespace WebApi.Areas.Trading.Controllers
             {
                 return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", ex.Message));
             }
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAllTag() {
+            WebApi_BLL.T_Photo_Tag tpt_bll = new WebApi_BLL.T_Photo_Tag();
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(tpt_bll.GetModelList("1=1"))));
         }
     }
 }

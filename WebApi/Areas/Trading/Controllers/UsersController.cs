@@ -45,6 +45,12 @@ namespace WebApi.Areas.Trading.Controllers
             }
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
         }
+
+        [HttpGet]
+        public IHttpActionResult GetUser(int UID) {
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModel(UID))));
+        }
+
         #endregion
 
         #region ==== [Post方法] ====

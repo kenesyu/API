@@ -45,6 +45,7 @@ C:\Work\臭皮匠\WebApi\WebApi_DAL\bin\Debug\System.Web.Http.xml
 C:\Work\臭皮匠\WebApi\WebApi_DAL\bin\Debug\System.Web.Http.Cors.xml
 C:\Work\臭皮匠\WebApi\WebApi_DAL\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
 C:\Work\臭皮匠\WebApi\WebApi_DAL\bin\Debug\zh-Hans\System.Web.Http.resources.dll
+C:\Work\臭皮匠\API\WebApi_DAL\obj\Debug\WebApi_DAL.csprojResolveAssemblyReference.cache
 C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\WebApi_DAL.dll
 C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\WebApi_DAL.pdb
 C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\Newtonsoft.Json.dll
@@ -62,6 +63,5 @@ C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\System.Web.Http.xml
 C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\System.Web.Http.Cors.xml
 C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\zh-Hans\System.Net.Http.Formatting.resources.dll
 C:\Work\臭皮匠\API\WebApi_DAL\bin\Debug\zh-Hans\System.Web.Http.resources.dll
-C:\Work\臭皮匠\API\WebApi_DAL\obj\Debug\WebApi_DAL.csprojResolveAssemblyReference.cache
 C:\Work\臭皮匠\API\WebApi_DAL\obj\Debug\WebApi_DAL.dll
 C:\Work\臭皮匠\API\WebApi_DAL\obj\Debug\WebApi_DAL.pdb

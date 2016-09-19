@@ -8,10 +8,10 @@ namespace WebApi_BLL
     /// <summary>
     /// T_PhotoTag
     /// </summary>
-    public partial class T_PhotoTag
+    public partial class T_Photo_Tag
     {
         private readonly WebApi_DAL.T_Photo_Tag dal = new WebApi_DAL.T_Photo_Tag();
-        public T_PhotoTag()
+        public T_Photo_Tag()
         { }
         #region  BasicMethod
 
