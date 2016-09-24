@@ -30,11 +30,32 @@ namespace WebApi.Areas.Trading.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetProductList(int Page, string strWhere, string strOrder)
+        public IHttpActionResult GetProductActivity() {
+            WebApi_BLL.T_Product_Activity tpa_bll = new WebApi_BLL.T_Product_Activity();
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(tpa_bll.GetModelList(""))));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductHot() {
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList("OnSale =1 and IsHot=1"))));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetProductNew()
         {
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList("OnSale =1 and IsNew=1"))));
+        }
+
+        [HttpPost]
+        public IHttpActionResult GetProductList()
+        {
+            int Page = int.Parse(requestHelper.GetRequsetForm("Page", ""));
+            string strWhere = requestHelper.GetRequsetForm("strWhere", "");
+            string strOrder = requestHelper.GetRequsetForm("strOrder", "");
             int TotalPage = 0;
             int PageSize = 10;
-            if (string.IsNullOrEmpty(strWhere)) {
+            if (string.IsNullOrEmpty(strWhere))
+            {
                 strWhere = " 1 = 1";
             }
 

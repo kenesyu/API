@@ -6,19 +6,19 @@ using WebApi_Model;
 namespace WebApi_BLL
 {
     /// <summary>
-    /// 用户连续签到
+    /// 商品首页轮播
     /// </summary>
-    public partial class T_UserSign
+    public partial class T_Product_Activity
     {
-        private readonly WebApi_DAL.T_UserSign dal = new WebApi_DAL.T_UserSign();
-        public T_UserSign()
+        private readonly WebApi_DAL.T_Product_Activity dal = new WebApi_DAL.T_Product_Activity();
+        public T_Product_Activity()
         { }
         #region  BasicMethod
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_UserSign model)
+        public int Add(WebApi_Model.T_Product_Activity model)
         {
             return dal.Add(model);
         }
@@ -26,7 +26,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_UserSign model)
+        public bool Update(WebApi_Model.T_Product_Activity model)
         {
             return dal.Update(model);
         }
@@ -34,31 +34,20 @@ namespace WebApi_BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int SignID)
+        public bool Delete(int ActivityID)
         {
 
-            return dal.Delete(SignID);
-        }
-
-
-        /// <summary>
-        /// 得到一个对象实体
-        /// </summary>
-        public WebApi_Model.T_UserSign GetModel(int SignID)
-        {
-
-            return dal.GetModel(SignID);
+            return dal.Delete(ActivityID);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_UserSign GetModel(int UID, DateTime Date)
+        public WebApi_Model.T_Product_Activity GetModel(int ActivityID)
         {
 
-            return dal.GetModel(UID, Date);
+            return dal.GetModel(ActivityID);
         }
-
 
         /// <summary>
         /// 获得数据列表
@@ -77,7 +66,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_UserSign> GetModelList(string strWhere)
+        public List<WebApi_Model.T_Product_Activity> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -85,13 +74,13 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_UserSign> DataTableToList(DataTable dt)
+        public List<WebApi_Model.T_Product_Activity> DataTableToList(DataTable dt)
         {
-            List<WebApi_Model.T_UserSign> modelList = new List<WebApi_Model.T_UserSign>();
+            List<WebApi_Model.T_Product_Activity> modelList = new List<WebApi_Model.T_Product_Activity>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WebApi_Model.T_UserSign model;
+                WebApi_Model.T_Product_Activity model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);

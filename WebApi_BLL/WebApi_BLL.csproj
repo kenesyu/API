@@ -66,6 +66,7 @@
     <Compile Include="T_Photo_Details.cs" />
     <Compile Include="T_Photo_Tag.cs" />
     <Compile Include="T_IndexBackGround.cs" />
+    <Compile Include="T_Product_Activity.cs" />
     <Compile Include="T_Product_Category.cs" />
     <Compile Include="T_Product_Property.cs" />
     <Compile Include="T_Product_Photo.cs" />

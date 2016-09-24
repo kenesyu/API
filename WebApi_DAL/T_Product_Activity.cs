@@ -7,11 +7,11 @@ using WebApi_DBUtility;
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_UserSign
+    /// 数据访问类:T_Product_Activity
     /// </summary>
-    public partial class T_UserSign
+    public partial class T_Product_Activity
     {
-        public T_UserSign()
+        public T_Product_Activity()
         { }
         #region  BasicMethod
 
@@ -19,23 +19,21 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_UserSign model)
+        public int Add(WebApi_Model.T_Product_Activity model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_UserSign(");
-            strSql.Append("UID,SignDate,Type,ReSignDate)");
+            strSql.Append("insert into T_Product_Activity(");
+            strSql.Append("ActiveType,KeyID,CoverPhoto)");
             strSql.Append(" values (");
-            strSql.Append("@UID,@SignDate,@Type,@ReSignDate)");
+            strSql.Append("@ActiveType,@KeyID,@CoverPhoto)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-					new SqlParameter("@UID", SqlDbType.Int,4),
-					new SqlParameter("@SignDate", SqlDbType.Date,3),
-					new SqlParameter("@Type", SqlDbType.Int,4),
-					new SqlParameter("@ReSignDate", SqlDbType.DateTime)};
-            parameters[0].Value = model.UID;
-            parameters[1].Value = model.SignDate;
-            parameters[2].Value = model.Type;
-            parameters[3].Value = model.ReSignDate;
+					new SqlParameter("@ActiveType", SqlDbType.Int,4),
+					new SqlParameter("@KeyID", SqlDbType.Int,4),
+					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50)};
+            parameters[0].Value = model.ActiveType;
+            parameters[1].Value = model.KeyID;
+            parameters[2].Value = model.CoverPhoto;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -50,26 +48,23 @@ namespace WebApi_DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_UserSign model)
+        public bool Update(WebApi_Model.T_Product_Activity model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_UserSign set ");
-            strSql.Append("UID=@UID,");
-            strSql.Append("SignDate=@SignDate,");
-            strSql.Append("Type=@Type,");
-            strSql.Append("ReSignDate=@ReSignDate");
-            strSql.Append(" where SignID=@SignID");
+            strSql.Append("update T_Product_Activity set ");
+            strSql.Append("ActiveType=@ActiveType,");
+            strSql.Append("KeyID=@KeyID,");
+            strSql.Append("CoverPhoto=@CoverPhoto");
+            strSql.Append(" where ActivityID=@ActivityID");
             SqlParameter[] parameters = {
-					new SqlParameter("@UID", SqlDbType.Int,4),
-					new SqlParameter("@SignDate", SqlDbType.Date,3),
-					new SqlParameter("@Type", SqlDbType.Int,4),
-					new SqlParameter("@ReSignDate", SqlDbType.DateTime),
-					new SqlParameter("@SignID", SqlDbType.Int,4)};
-            parameters[0].Value = model.UID;
-            parameters[1].Value = model.SignDate;
-            parameters[2].Value = model.Type;
-            parameters[3].Value = model.ReSignDate;
-            parameters[4].Value = model.SignID;
+					new SqlParameter("@ActiveType", SqlDbType.Int,4),
+					new SqlParameter("@KeyID", SqlDbType.Int,4),
+					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
+					new SqlParameter("@ActivityID", SqlDbType.Int,4)};
+            parameters[0].Value = model.ActiveType;
+            parameters[1].Value = model.KeyID;
+            parameters[2].Value = model.CoverPhoto;
+            parameters[3].Value = model.ActivityID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -85,16 +80,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int SignID)
+        public bool Delete(int ActivityID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_UserSign ");
-            strSql.Append(" where SignID=@SignID");
+            strSql.Append("delete from T_Product_Activity ");
+            strSql.Append(" where ActivityID=@ActivityID");
             SqlParameter[] parameters = {
-					new SqlParameter("@SignID", SqlDbType.Int,4)
+					new SqlParameter("@ActivityID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = SignID;
+            parameters[0].Value = ActivityID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -109,11 +104,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string SignIDlist)
+        public bool DeleteList(string ActivityIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_UserSign ");
-            strSql.Append(" where SignID in (" + SignIDlist + ")  ");
+            strSql.Append("delete from T_Product_Activity ");
+            strSql.Append(" where ActivityID in (" + ActivityIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -129,18 +124,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_UserSign GetModel(int SignID)
+        public WebApi_Model.T_Product_Activity GetModel(int ActivityID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 SignID,UID,SignDate,Type,ReSignDate from T_UserSign ");
-            strSql.Append(" where SignID=@SignID");
+            strSql.Append("select  top 1 ActivityID,ActiveType,KeyID,CoverPhoto from T_Product_Activity ");
+            strSql.Append(" where ActivityID=@ActivityID");
             SqlParameter[] parameters = {
-					new SqlParameter("@SignID", SqlDbType.Int,4)
+					new SqlParameter("@ActivityID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = SignID;
+            parameters[0].Value = ActivityID;
 
-            WebApi_Model.T_UserSign model = new WebApi_Model.T_UserSign();
+            WebApi_Model.T_Product_Activity model = new WebApi_Model.T_Product_Activity();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -151,61 +146,31 @@ namespace WebApi_DAL
                 return null;
             }
         }
-
-
-        public WebApi_Model.T_UserSign GetModel(int UID, DateTime Date)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 SignID,UID,SignDate,Type,ReSignDate from T_UserSign ");
-            strSql.Append(" where UID=@UID and SignDate = @SignDate");
-            SqlParameter[] parameters = {
-					new SqlParameter("@UID", SqlDbType.Int,4),
-                    new SqlParameter("@SignDate", SqlDbType.Date)
-			};
-            parameters[0].Value = UID;
-            parameters[1].Value = Date.ToString("yyyy-MM-dd");
-
-            WebApi_Model.T_UserSign model = new WebApi_Model.T_UserSign();
-            DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
-            if (ds.Tables[0].Rows.Count > 0)
-            {
-                return DataRowToModel(ds.Tables[0].Rows[0]);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
 
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_UserSign DataRowToModel(DataRow row)
+        public WebApi_Model.T_Product_Activity DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_UserSign model = new WebApi_Model.T_UserSign();
+            WebApi_Model.T_Product_Activity model = new WebApi_Model.T_Product_Activity();
             if (row != null)
             {
-                if (row["SignID"] != null && row["SignID"].ToString() != "")
+                if (row["ActivityID"] != null && row["ActivityID"].ToString() != "")
                 {
-                    model.SignID = int.Parse(row["SignID"].ToString());
+                    model.ActivityID = int.Parse(row["ActivityID"].ToString());
                 }
-                if (row["UID"] != null && row["UID"].ToString() != "")
+                if (row["ActiveType"] != null && row["ActiveType"].ToString() != "")
                 {
-                    model.UID = int.Parse(row["UID"].ToString());
+                    model.ActiveType = int.Parse(row["ActiveType"].ToString());
                 }
-                if (row["SignDate"] != null && row["SignDate"].ToString() != "")
+                if (row["KeyID"] != null && row["KeyID"].ToString() != "")
                 {
-                    model.SignDate = DateTime.Parse(row["SignDate"].ToString());
+                    model.KeyID = int.Parse(row["KeyID"].ToString());
                 }
-                if (row["Type"] != null && row["Type"].ToString() != "")
+                if (row["CoverPhoto"] != null)
                 {
-                    model.Type = int.Parse(row["Type"].ToString());
-                }
-                if (row["ReSignDate"] != null && row["ReSignDate"].ToString() != "")
-                {
-                    model.ReSignDate = DateTime.Parse(row["ReSignDate"].ToString());
+                    model.CoverPhoto = row["CoverPhoto"].ToString();
                 }
             }
             return model;
@@ -217,8 +182,8 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select SignID,UID,SignDate,Type,ReSignDate ");
-            strSql.Append(" FROM T_UserSign ");
+            strSql.Append("select ActivityID,ActiveType,KeyID,CoverPhoto ");
+            strSql.Append(" FROM T_Product_Activity ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -237,8 +202,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" SignID,UID,SignDate,Type,ReSignDate ");
-            strSql.Append(" FROM T_UserSign ");
+            strSql.Append(" ActivityID,ActiveType,KeyID,CoverPhoto ");
+            strSql.Append(" FROM T_Product_Activity ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -253,7 +218,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_UserSign ");
+            strSql.Append("select count(1) FROM T_Product_Activity ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -282,9 +247,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.SignID desc");
+                strSql.Append("order by T.ActivityID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_UserSign T ");
+            strSql.Append(")AS Row, T.*  from T_Product_Activity T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -309,14 +274,14 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_UserSign";
-            parameters[1].Value = "SignID";
+            parameters[0].Value = "T_Product_Activity";
+            parameters[1].Value = "ActivityID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;
             parameters[5].Value = 0;
             parameters[6].Value = strWhere;	
-            return DBHelper.RunProcedure("UP_GetRecordByPage",parameters,"ds");
+            return DbHelperSQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
         }*/
 
         #endregion  BasicMethod

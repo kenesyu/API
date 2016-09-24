@@ -218,8 +218,7 @@ C:\Work\臭皮匠\WebApi\WebApi\bin\System.Web.Cors.dll
 C:\Work\臭皮匠\WebApi\WebApi\bin\System.Web.Http.Cors.dll
 C:\Work\臭皮匠\WebApi\WebApi\bin\System.Web.Http.Cors.xml
 C:\Work\臭皮匠\WebApi\WebApi\bin\CCPRestSDK.dll
-C:\Work\臭皮匠\API\WebApi\bin\WebApi.dll
-C:\Work\臭皮匠\API\WebApi\bin\WebApi.pdb
+C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Web.Http.resources.dll
 C:\Work\臭皮匠\API\WebApi\bin\Antlr3.Runtime.dll
 C:\Work\臭皮匠\API\WebApi\bin\CCPRestSDK.dll
 C:\Work\臭皮匠\API\WebApi\bin\EntityFramework.dll
@@ -262,7 +261,6 @@ C:\Work\臭皮匠\API\WebApi\bin\System.Web.WebPages.Deployment.xml
 C:\Work\臭皮匠\API\WebApi\bin\System.Web.WebPages.Razor.xml
 C:\Work\臭皮匠\API\WebApi\bin\WebApi_DAL.pdb
 C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Net.Http.Formatting.resources.dll
-C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Web.Http.resources.dll
 C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Web.Http.WebHost.resources.dll
 C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\EntityFramework.resources.dll
 C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Web.Helpers.resources.dll
@@ -276,3 +274,5 @@ C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
 C:\Work\臭皮匠\API\WebApi\obj\Debug\WebApi.csprojResolveAssemblyReference.cache
 C:\Work\臭皮匠\API\WebApi\obj\Debug\WebApi.dll
 C:\Work\臭皮匠\API\WebApi\obj\Debug\WebApi.pdb
+C:\Work\臭皮匠\API\WebApi\bin\WebApi.dll
+C:\Work\臭皮匠\API\WebApi\bin\WebApi.pdb

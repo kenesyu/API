@@ -18,9 +18,13 @@ namespace WebApi.Areas.Trading.Controllers
         protected static WebApi_BLL.T_Photo_Collection bll = new WebApi_BLL.T_Photo_Collection();
         protected static RequestHelper requestHelper = new RequestHelper();
 
-        [HttpGet]
-        public IHttpActionResult InitPhotoList(int Page,string strWhere, string strOrder)
+        [HttpPost]
+        public IHttpActionResult InitPhotoList()
         {
+            int Page = int.Parse(requestHelper.GetRequsetForm("Page", ""));
+            string strWhere = requestHelper.GetRequsetForm("strWhere", "");
+            string strOrder = requestHelper.GetRequsetForm("strOrder", "");
+
             int TotalPage = 0;
             int PageSize = 10;
             if (string.IsNullOrEmpty(strWhere))
