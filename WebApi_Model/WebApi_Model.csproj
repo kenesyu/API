@@ -59,6 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="T_User_ShopCar.cs" />
+    <Compile Include="T_Product_OrderDetails.cs" />
+    <Compile Include="T_Product_Orders.cs" />
     <Compile Include="T_Product_Activity.cs" />
     <Compile Include="T_Photo_Store.cs" />
     <Compile Include="T_Photo_Pay.cs" />

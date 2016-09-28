@@ -242,9 +242,6 @@ namespace WebApi.Areas.Trading.Controllers
                 return Ok(ReturnJsonResult.GetJsonResult(-1, "Faild！", ex.Message));
             }
         }
-
-
-
         #endregion
     }
 }

@@ -28,11 +28,13 @@ namespace WebApi_Model
 		private int? _salesvolume;
         private string _categoryName1;
         private string _categoryName2;
+        private string _propertyGroup;
 
         private List<T_Product_Tag> _product_tag;
         private List<T_Product_Ext> _product_ext;
         private List<T_Product_Photo> _product_photo;
         private List<T_Product_Photo> _product_photo_details;
+        private List<T_Product_Property> _product_property;
 
 		/// <summary>
 		/// 
@@ -155,6 +157,15 @@ namespace WebApi_Model
 			get{return _salesvolume;}
 		}
 
+        /// <summary>
+        /// 属性分组
+        /// </summary>
+        public string PropertyGroup
+        {
+            set { _propertyGroup = value; }
+            get { return _propertyGroup; }
+        }
+
                 /// <summary>
         /// 标签
         /// </summary>
@@ -190,6 +201,15 @@ namespace WebApi_Model
         {
             set { _product_photo_details = value; }
             get { return _product_photo_details; }
+        }
+
+        /// <summary>
+        /// 属性集
+        /// </summary>
+        public List<T_Product_Property> Product_Property
+        {
+            set { _product_property = value; }
+            get { return _product_property; }
         }
 
         /// <summary>

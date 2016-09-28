@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="T_Product_OrderDetails.cs" />
+    <Compile Include="T_Product_Orders.cs" />
     <Compile Include="T_Photo_Store.cs" />
     <Compile Include="T_Photo_Pay.cs" />
     <Compile Include="T_Photo_Likes.cs" />
@@ -71,6 +73,7 @@
     <Compile Include="T_Product_Property.cs" />
     <Compile Include="T_Product_Photo.cs" />
     <Compile Include="T_Product_Ext.cs" />
+    <Compile Include="T_User_ShopCar.cs" />
     <Compile Include="T_User_SMSCode.cs" />
     <Compile Include="T_Product.cs" />
     <Compile Include="T_Product_Tag.cs" />

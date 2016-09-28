@@ -183,7 +183,7 @@ namespace WebApi_DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ProductID,ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume from T_Product ");
+            strSql.Append("select  top 1 * from T_Product ");
             strSql.Append(" where ProductID=@ProductID");
             SqlParameter[] parameters = {
 					new SqlParameter("@ProductID", SqlDbType.Int,4)
@@ -271,6 +271,11 @@ namespace WebApi_DAL
                 {
                     model.SalesVolume = int.Parse(row["SalesVolume"].ToString());
                 }
+                if (row["PropertyGroup"] != null && row["PropertyGroup"].ToString() != "")
+                {
+                    model.PropertyGroup = row["PropertyGroup"].ToString();
+                }
+
             }
             return model;
         }
@@ -281,7 +286,7 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ProductID,ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume ");
+            strSql.Append("select * ");
             strSql.Append(" FROM T_Product ");
             if (strWhere.Trim() != "")
             {
@@ -301,7 +306,7 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ProductID,ProductName,Descriptions,TagID,RefProductID,RefPhotoID,Category1,Category2,LowPrice,OnSale,IsHot,IsNew,CoverPhoto,CreateDate,SalesVolume ");
+            strSql.Append(" * ");
             strSql.Append(" FROM T_Product ");
             if (strWhere.Trim() != "")
             {

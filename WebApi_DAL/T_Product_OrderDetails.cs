@@ -3,15 +3,15 @@ using System.Data;
 using System.Text;
 using System.Data.SqlClient;
 using WebApi_DBUtility;
-
+//using Maticsoft.DBUtility;//Please add references
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_Product_Property
+    /// 数据访问类:T_Product_OrderDetails
     /// </summary>
-    public partial class T_Product_Property
+    public partial class T_Product_OrderDetails
     {
-        public T_Product_Property()
+        public T_Product_OrderDetails()
         { }
         #region  BasicMethod
 
@@ -19,23 +19,23 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Product_Property model)
+        public int Add(WebApi_Model.T_Product_OrderDetails model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_Product_Property(");
-            strSql.Append("PropertyName,PropertyValue,PropertyGroup,ProductID)");
+            strSql.Append("insert into T_Product_OrderDetails(");
+            strSql.Append("OrderID,ProductID,ProductExtID,Qty)");
             strSql.Append(" values (");
-            strSql.Append("@PropertyName,@PropertyValue,@PropertyGroup,@ProductID)");
+            strSql.Append("@OrderID,@ProductID,@ProductExtID,@Qty)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-					new SqlParameter("@PropertyName", SqlDbType.NVarChar,50),
-					new SqlParameter("@PropertyValue", SqlDbType.NVarChar,50),
-					new SqlParameter("@PropertyGroup", SqlDbType.NVarChar,50),
-                    new SqlParameter("@ProductID",SqlDbType.Int)};
-            parameters[0].Value = model.PropertyName;
-            parameters[1].Value = model.PropertyValue;
-            parameters[2].Value = model.PropertyGroup;
-            parameters[3].Value = model.ProductID;
+					new SqlParameter("@OrderID", SqlDbType.Int,4),
+					new SqlParameter("@ProductID", SqlDbType.Int,4),
+					new SqlParameter("@ProductExtID", SqlDbType.Int,4),
+					new SqlParameter("@Qty", SqlDbType.Int,4)};
+            parameters[0].Value = model.OrderID;
+            parameters[1].Value = model.ProductID;
+            parameters[2].Value = model.ProductExtID;
+            parameters[3].Value = model.Qty;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -50,26 +50,26 @@ namespace WebApi_DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Product_Property model)
+        public bool Update(WebApi_Model.T_Product_OrderDetails model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_Product_Property set ");
-            strSql.Append("PropertyName=@PropertyName,");
-            strSql.Append("PropertyValue=@PropertyValue,");
-            strSql.Append("PropertyGroup=@PropertyGroup,");
-            strSql.Append("ProductID=@ProductID");
-            strSql.Append(" where PropertyID=@PropertyID");
+            strSql.Append("update T_Product_OrderDetails set ");
+            strSql.Append("OrderID=@OrderID,");
+            strSql.Append("ProductID=@ProductID,");
+            strSql.Append("ProductExtID=@ProductExtID,");
+            strSql.Append("Qty=@Qty");
+            strSql.Append(" where OrderDetailsID=@OrderDetailsID");
             SqlParameter[] parameters = {
-					new SqlParameter("@PropertyName", SqlDbType.NVarChar,50),
-					new SqlParameter("@PropertyValue", SqlDbType.NVarChar,50),
-					new SqlParameter("@PropertyGroup", SqlDbType.NVarChar,50),
-                    new SqlParameter("@ProductID", SqlDbType.Int),
-					new SqlParameter("@PropertyID", SqlDbType.Int,4)};
-            parameters[0].Value = model.PropertyName;
-            parameters[1].Value = model.PropertyValue;
-            parameters[2].Value = model.PropertyGroup;
-            parameters[3].Value = model.ProductID;
-            parameters[4].Value = model.PropertyID;
+					new SqlParameter("@OrderID", SqlDbType.Int,4),
+					new SqlParameter("@ProductID", SqlDbType.Int,4),
+					new SqlParameter("@ProductExtID", SqlDbType.Int,4),
+					new SqlParameter("@Qty", SqlDbType.Int,4),
+					new SqlParameter("@OrderDetailsID", SqlDbType.Int,4)};
+            parameters[0].Value = model.OrderID;
+            parameters[1].Value = model.ProductID;
+            parameters[2].Value = model.ProductExtID;
+            parameters[3].Value = model.Qty;
+            parameters[4].Value = model.OrderDetailsID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -85,16 +85,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int PropertyID)
+        public bool Delete(int OrderDetailsID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Property ");
-            strSql.Append(" where PropertyID=@PropertyID");
+            strSql.Append("delete from T_Product_OrderDetails ");
+            strSql.Append(" where OrderDetailsID=@OrderDetailsID");
             SqlParameter[] parameters = {
-					new SqlParameter("@PropertyID", SqlDbType.Int,4)
+					new SqlParameter("@OrderDetailsID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = PropertyID;
+            parameters[0].Value = OrderDetailsID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -109,11 +109,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string PropertyIDlist)
+        public bool DeleteList(string OrderDetailsIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Property ");
-            strSql.Append(" where PropertyID in (" + PropertyIDlist + ")  ");
+            strSql.Append("delete from T_Product_OrderDetails ");
+            strSql.Append(" where OrderDetailsID in (" + OrderDetailsIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -129,18 +129,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Property GetModel(int PropertyID)
+        public WebApi_Model.T_Product_OrderDetails GetModel(int OrderDetailsID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 PropertyID,PropertyName,PropertyValue,PropertyGroup,ProductID from T_Product_Property ");
-            strSql.Append(" where PropertyID=@PropertyID");
+            strSql.Append("select  top 1 OrderDetailsID,OrderID,ProductID,ProductExtID,Qty from T_Product_OrderDetails ");
+            strSql.Append(" where OrderDetailsID=@OrderDetailsID");
             SqlParameter[] parameters = {
-					new SqlParameter("@PropertyID", SqlDbType.Int,4)
+					new SqlParameter("@OrderDetailsID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = PropertyID;
+            parameters[0].Value = OrderDetailsID;
 
-            WebApi_Model.T_Product_Property model = new WebApi_Model.T_Product_Property();
+            WebApi_Model.T_Product_OrderDetails model = new WebApi_Model.T_Product_OrderDetails();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -156,30 +156,30 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Property DataRowToModel(DataRow row)
+        public WebApi_Model.T_Product_OrderDetails DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_Product_Property model = new WebApi_Model.T_Product_Property();
+            WebApi_Model.T_Product_OrderDetails model = new WebApi_Model.T_Product_OrderDetails();
             if (row != null)
             {
-                if (row["PropertyID"] != null && row["PropertyID"].ToString() != "")
+                if (row["OrderDetailsID"] != null && row["OrderDetailsID"].ToString() != "")
                 {
-                    model.PropertyID = int.Parse(row["PropertyID"].ToString());
+                    model.OrderDetailsID = int.Parse(row["OrderDetailsID"].ToString());
                 }
-                if (row["PropertyName"] != null)
+                if (row["OrderID"] != null && row["OrderID"].ToString() != "")
                 {
-                    model.PropertyName = row["PropertyName"].ToString();
-                }
-                if (row["PropertyValue"] != null)
-                {
-                    model.PropertyValue = row["PropertyValue"].ToString();
-                }
-                if (row["PropertyGroup"] != null)
-                {
-                    model.PropertyGroup = row["PropertyGroup"].ToString();
+                    model.OrderID = int.Parse(row["OrderID"].ToString());
                 }
                 if (row["ProductID"] != null && row["ProductID"].ToString() != "")
                 {
-                    model.ProductID = Convert.ToInt32(row["ProductID"].ToString());
+                    model.ProductID = int.Parse(row["ProductID"].ToString());
+                }
+                if (row["ProductExtID"] != null && row["ProductExtID"].ToString() != "")
+                {
+                    model.ProductExtID = int.Parse(row["ProductExtID"].ToString());
+                }
+                if (row["Qty"] != null && row["Qty"].ToString() != "")
+                {
+                    model.Qty = int.Parse(row["Qty"].ToString());
                 }
             }
             return model;
@@ -191,13 +191,12 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select PropertyID,PropertyName,PropertyValue,PropertyGroup,ProductID ");
-            strSql.Append(" FROM T_Product_Property ");
+            strSql.Append("select OrderDetailsID,OrderID,ProductID,ProductExtID,Qty ");
+            strSql.Append(" FROM T_Product_OrderDetails ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
             }
-
             return DBHelper.Query(strSql.ToString());
         }
 
@@ -212,8 +211,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" PropertyID,PropertyName,PropertyValue,PropertyGroup,ProductID ");
-            strSql.Append(" FROM T_Product_Property ");
+            strSql.Append(" OrderDetailsID,OrderID,ProductID,ProductExtID,Qty ");
+            strSql.Append(" FROM T_Product_OrderDetails ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -228,7 +227,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_Product_Property ");
+            strSql.Append("select count(1) FROM T_Product_OrderDetails ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -257,9 +256,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.PropertyID desc");
+                strSql.Append("order by T.OrderDetailsID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_Product_Property T ");
+            strSql.Append(")AS Row, T.*  from T_Product_OrderDetails T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -284,8 +283,8 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_Product_Property";
-            parameters[1].Value = "PropertyID";
+            parameters[0].Value = "T_Product_OrderDetails";
+            parameters[1].Value = "OrderDetailsID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;

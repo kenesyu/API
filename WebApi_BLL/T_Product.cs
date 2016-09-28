@@ -59,13 +59,18 @@ namespace WebApi_BLL
 
                 if (!Lazy)
                 {
-                    WebApi_BLL.T_Product_Photo tpp_bll = new T_Product_Photo();
+                    WebApi_BLL.T_Product_Photo a_bll = new T_Product_Photo();
                     //图片
-                    product.Product_Photo = tpp_bll.GetModelList(" ImgType = 0 and ProductID =" + product.ProductID);
+                    product.Product_Photo = a_bll.GetModelList(" ImgType = 0 and ProductID =" + product.ProductID);
                     //图文详情
-                    product.Product_Photo_Details = tpp_bll.GetModelList(" ImgType = 1 and ProductID =" + product.ProductID);
-                    WebApi_BLL.T_Product_Ext tpe_bll = new T_Product_Ext();
-                    product.Product_Ext = tpe_bll.GetModelList(" ProductID = " + product.ProductID);
+                    product.Product_Photo_Details = a_bll.GetModelList(" ImgType = 1 and ProductID =" + product.ProductID);
+
+
+                    WebApi_BLL.T_Product_Ext b_bll = new T_Product_Ext();
+                    product.Product_Ext = b_bll.GetModelList(" ProductID = " + product.ProductID);
+
+                    WebApi_BLL.T_Product_Property c_bll = new T_Product_Property();
+                    product.Product_Property = c_bll.GetModelList(" ProductID = " + ProductID);
                     //product.Product_Ext = 
                 }
             }

@@ -9,6 +9,7 @@ using WebApi_Common;
 using WebApi_DBUtility;
 using System.Data.SqlClient;
 using Newtonsoft.Json;
+using WebApi_Model;
 
 
 namespace WebApi.Areas.Trading.Controllers
@@ -59,10 +60,13 @@ namespace WebApi.Areas.Trading.Controllers
         public IHttpActionResult CheckPhotoIsBuy(int UID, int PhotoCollectionID)
         {
             WebApi_BLL.T_Photo_Pay tppbll = new WebApi_BLL.T_Photo_Pay();
-            List<WebApi_Model.T_Photo_Pay> list = tppbll.GetModelList("UID=" + UID + " and PhotoCollectionID=" + PhotoCollectionID );
-            if (list.Count > 0) {
+            List<WebApi_Model.T_Photo_Pay> list = tppbll.GetModelList("UID=" + UID + " and PhotoCollectionID=" + PhotoCollectionID);
+            if (list.Count > 0)
+            {
                 return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
-            }else{
+            }
+            else
+            {
                 return Ok(ReturnJsonResult.GetJsonResult(1, "OK", false));
             }
         }
@@ -236,6 +240,8 @@ namespace WebApi.Areas.Trading.Controllers
             WebApi_BLL.T_Photo_Tag tpt_bll = new WebApi_BLL.T_Photo_Tag();
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(tpt_bll.GetModelList("1=1"))));
         }
+
+
     }
 }
     

@@ -14,6 +14,7 @@ namespace WebApi_Model
         private string _propertyname;
         private string _propertyvalue;
         private string _propertygroup;
+        private int _productID;
         /// <summary>
         /// 
         /// </summary>
@@ -45,6 +46,14 @@ namespace WebApi_Model
         {
             set { _propertygroup = value; }
             get { return _propertygroup; }
+        }
+
+        /// <summary>
+        /// 产品ID
+        /// </summary>
+        public int ProductID { 
+            set { _productID = value; }
+            get { return _productID; }
         }
         #endregion Model
 
