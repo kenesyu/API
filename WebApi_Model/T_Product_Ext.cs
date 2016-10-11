@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace WebApi_Model
 {
     /// <summary>
@@ -17,6 +18,15 @@ namespace WebApi_Model
         private int? _propertyb;
         private int? _propertyc;
         private int? _stock;
+        private string _property;
+        private List<T_Product_Property> _hasProperty;
+
+
+        public List<T_Product_Property> HasProperty {
+            set { _hasProperty = value; }
+            get { return _hasProperty; }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -73,6 +83,16 @@ namespace WebApi_Model
             set { _stock = value; }
             get { return _stock; }
         }
+
+        /// <summary>
+        /// 属性组取代PropertyA，B，C
+        /// </summary>
+        public string Property
+        {
+            set { _property = value; }
+            get { return _property; }
+        }
+
         #endregion Model
 
     }

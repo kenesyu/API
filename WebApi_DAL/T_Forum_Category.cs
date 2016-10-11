@@ -7,11 +7,11 @@ using WebApi_DBUtility;
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_Product_Ext
+    /// 数据访问类:T_Forum_Category
     /// </summary>
-    public partial class T_Product_Ext
+    public partial class T_Forum_Category
     {
-        public T_Product_Ext()
+        public T_Forum_Category()
         { }
         #region  BasicMethod
 
@@ -19,29 +19,23 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Product_Ext model)
+        public int Add(WebApi_Model.T_Forum_Category model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_Product_Ext(");
-            strSql.Append("ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property)");
+            strSql.Append("insert into T_Forum_Category(");
+            strSql.Append("Level,CategoryName,CategoryICO,ParentID)");
             strSql.Append(" values (");
-            strSql.Append("@ProductID,@Price,@PropertyA,@PropertyB,@PropertyC,@Stock,@Property)");
+            strSql.Append("@Level,@CategoryName,@CategoryICO,@ParentID)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Price", SqlDbType.Decimal,9),
-					new SqlParameter("@PropertyA", SqlDbType.Int,4),
-					new SqlParameter("@PropertyB", SqlDbType.Int,4),
-					new SqlParameter("@PropertyC", SqlDbType.Int,4),
-					new SqlParameter("@Stock", SqlDbType.Int,4),
-					new SqlParameter("@Property", SqlDbType.NVarChar,50)};
-            parameters[0].Value = model.ProductID;
-            parameters[1].Value = model.Price;
-            parameters[2].Value = model.PropertyA;
-            parameters[3].Value = model.PropertyB;
-            parameters[4].Value = model.PropertyC;
-            parameters[5].Value = model.Stock;
-            parameters[6].Value = model.Property;
+					new SqlParameter("@Level", SqlDbType.Int,4),
+					new SqlParameter("@CategoryName", SqlDbType.NVarChar,50),
+					new SqlParameter("@CategoryICO", SqlDbType.NVarChar,50),
+					new SqlParameter("@ParentID", SqlDbType.Int,4)};
+            parameters[0].Value = model.Level;
+            parameters[1].Value = model.CategoryName;
+            parameters[2].Value = model.CategoryICO;
+            parameters[3].Value = model.ParentID;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -56,35 +50,26 @@ namespace WebApi_DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Product_Ext model)
+        public bool Update(WebApi_Model.T_Forum_Category model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_Product_Ext set ");
-            strSql.Append("ProductID=@ProductID,");
-            strSql.Append("Price=@Price,");
-            strSql.Append("PropertyA=@PropertyA,");
-            strSql.Append("PropertyB=@PropertyB,");
-            strSql.Append("PropertyC=@PropertyC,");
-            strSql.Append("Stock=@Stock,");
-            strSql.Append("Property=@Property");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("update T_Forum_Category set ");
+            strSql.Append("Level=@Level,");
+            strSql.Append("CategoryName=@CategoryName,");
+            strSql.Append("CategoryICO=@CategoryICO,");
+            strSql.Append("ParentID=@ParentID");
+            strSql.Append(" where ForumCategoryID=@ForumCategoryID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Price", SqlDbType.Decimal,9),
-					new SqlParameter("@PropertyA", SqlDbType.Int,4),
-					new SqlParameter("@PropertyB", SqlDbType.Int,4),
-					new SqlParameter("@PropertyC", SqlDbType.Int,4),
-					new SqlParameter("@Stock", SqlDbType.Int,4),
-					new SqlParameter("@Property", SqlDbType.NVarChar,50),
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)};
-            parameters[0].Value = model.ProductID;
-            parameters[1].Value = model.Price;
-            parameters[2].Value = model.PropertyA;
-            parameters[3].Value = model.PropertyB;
-            parameters[4].Value = model.PropertyC;
-            parameters[5].Value = model.Stock;
-            parameters[6].Value = model.Property;
-            parameters[7].Value = model.ProductExtID;
+					new SqlParameter("@Level", SqlDbType.Int,4),
+					new SqlParameter("@CategoryName", SqlDbType.NVarChar,50),
+					new SqlParameter("@CategoryICO", SqlDbType.NVarChar,50),
+					new SqlParameter("@ParentID", SqlDbType.Int,4),
+					new SqlParameter("@ForumCategoryID", SqlDbType.Int,4)};
+            parameters[0].Value = model.Level;
+            parameters[1].Value = model.CategoryName;
+            parameters[2].Value = model.CategoryICO;
+            parameters[3].Value = model.ParentID;
+            parameters[4].Value = model.ForumCategoryID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -100,16 +85,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ProductExtID)
+        public bool Delete(int ForumCategoryID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Ext ");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("delete from T_Forum_Category ");
+            strSql.Append(" where ForumCategoryID=@ForumCategoryID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)
+					new SqlParameter("@ForumCategoryID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ProductExtID;
+            parameters[0].Value = ForumCategoryID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -124,11 +109,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string ProductExtIDlist)
+        public bool DeleteList(string ForumCategoryIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Ext ");
-            strSql.Append(" where ProductExtID in (" + ProductExtIDlist + ")  ");
+            strSql.Append("delete from T_Forum_Category ");
+            strSql.Append(" where ForumCategoryID in (" + ForumCategoryIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -144,18 +129,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext GetModel(int ProductExtID)
+        public WebApi_Model.T_Forum_Category GetModel(int ForumCategoryID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property from T_Product_Ext ");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("select  top 1 ForumCategoryID,Level,CategoryName,CategoryICO,ParentID from T_Forum_Category ");
+            strSql.Append(" where ForumCategoryID=@ForumCategoryID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)
+					new SqlParameter("@ForumCategoryID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ProductExtID;
+            parameters[0].Value = ForumCategoryID;
 
-            WebApi_Model.T_Product_Ext model = new WebApi_Model.T_Product_Ext();
+            WebApi_Model.T_Forum_Category model = new WebApi_Model.T_Forum_Category();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -171,45 +156,31 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext DataRowToModel(DataRow row)
+        public WebApi_Model.T_Forum_Category DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_Product_Ext model = new WebApi_Model.T_Product_Ext();
+            WebApi_Model.T_Forum_Category model = new WebApi_Model.T_Forum_Category();
             if (row != null)
             {
-                if (row["ProductExtID"] != null && row["ProductExtID"].ToString() != "")
+                if (row["ForumCategoryID"] != null && row["ForumCategoryID"].ToString() != "")
                 {
-                    model.ProductExtID = int.Parse(row["ProductExtID"].ToString());
+                    model.ForumCategoryID = int.Parse(row["ForumCategoryID"].ToString());
                 }
-                if (row["ProductID"] != null && row["ProductID"].ToString() != "")
+                if (row["Level"] != null && row["Level"].ToString() != "")
                 {
-                    model.ProductID = int.Parse(row["ProductID"].ToString());
+                    model.Level = int.Parse(row["Level"].ToString());
                 }
-                if (row["Price"] != null && row["Price"].ToString() != "")
+                if (row["CategoryName"] != null)
                 {
-                    model.Price = decimal.Parse(row["Price"].ToString());
+                    model.CategoryName = row["CategoryName"].ToString();
                 }
-                if (row["PropertyA"] != null && row["PropertyA"].ToString() != "")
+                if (row["CategoryICO"] != null)
                 {
-                    model.PropertyA = int.Parse(row["PropertyA"].ToString());
+                    model.CategoryICO = row["CategoryICO"].ToString();
                 }
-                if (row["PropertyB"] != null && row["PropertyB"].ToString() != "")
+                if (row["ParentID"] != null && row["ParentID"].ToString() != "")
                 {
-                    model.PropertyB = int.Parse(row["PropertyB"].ToString());
+                    model.ParentID = int.Parse(row["ParentID"].ToString());
                 }
-                if (row["PropertyC"] != null && row["PropertyC"].ToString() != "")
-                {
-                    model.PropertyC = int.Parse(row["PropertyC"].ToString());
-                }
-                if (row["Stock"] != null && row["Stock"].ToString() != "")
-                {
-                    model.Stock = int.Parse(row["Stock"].ToString());
-                }
-                if (row["Property"] != null)
-                {
-                    model.Property = row["Property"].ToString();
-                }
-
-                //model.HasProperty = 
             }
             return model;
         }
@@ -220,8 +191,8 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property ");
-            strSql.Append(" FROM T_Product_Ext ");
+            strSql.Append("select ForumCategoryID,Level,CategoryName,CategoryICO,ParentID ");
+            strSql.Append(" FROM T_Forum_Category ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -240,8 +211,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property ");
-            strSql.Append(" FROM T_Product_Ext ");
+            strSql.Append(" ForumCategoryID,Level,CategoryName,CategoryICO,ParentID ");
+            strSql.Append(" FROM T_Forum_Category ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -256,7 +227,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_Product_Ext ");
+            strSql.Append("select count(1) FROM T_Forum_Category ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -285,9 +256,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.ProductExtID desc");
+                strSql.Append("order by T.ForumCategoryID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_Product_Ext T ");
+            strSql.Append(")AS Row, T.*  from T_Forum_Category T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -312,8 +283,8 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_Product_Ext";
-            parameters[1].Value = "ProductExtID";
+            parameters[0].Value = "T_Forum_Category";
+            parameters[1].Value = "ForumCategoryID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;

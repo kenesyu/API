@@ -5,19 +5,26 @@ using WebApi_Model;
 namespace WebApi_BLL
 {
     /// <summary>
-    /// 商品扩展
+    /// 贴子礼物
     /// </summary>
-    public partial class T_Product_Ext
+    public partial class T_Forum_Gift
     {
-        private readonly WebApi_DAL.T_Product_Ext dal = new WebApi_DAL.T_Product_Ext();
-        public T_Product_Ext()
+        private readonly WebApi_DAL.T_Forum_Gift dal = new WebApi_DAL.T_Forum_Gift();
+        public T_Forum_Gift()
         { }
         #region  BasicMethod
+        /// <summary>
+        /// 是否存在该记录
+        /// </summary>
+        public bool Exists(int ForumID, int GiftID, int Qty, int PostUID, int ReceiptUID, DateTime PostTime)
+        {
+            return dal.Exists(ForumID, GiftID, Qty, PostUID, ReceiptUID, PostTime);
+        }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Product_Ext model)
+        public bool Add(WebApi_Model.T_Forum_Gift model)
         {
             return dal.Add(model);
         }
@@ -25,7 +32,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Product_Ext model)
+        public bool Update(WebApi_Model.T_Forum_Gift model)
         {
             return dal.Update(model);
         }
@@ -33,23 +40,21 @@ namespace WebApi_BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ProductExtID)
+        public bool Delete(int ForumID, int GiftID, int Qty, int PostUID, int ReceiptUID, DateTime PostTime)
         {
 
-            return dal.Delete(ProductExtID);
+            return dal.Delete(ForumID, GiftID, Qty, PostUID, ReceiptUID, PostTime);
         }
-
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext GetModel(int ProductExtID)
+        public WebApi_Model.T_Forum_Gift GetModel(int ForumID, int GiftID, int Qty, int PostUID, int ReceiptUID, DateTime PostTime)
         {
-            WebApi_Model.T_Product_Ext model = dal.GetModel(ProductExtID);
-            T_Product_Property tpp = new T_Product_Property();
-            model.HasProperty = tpp.GetModelList("PropertyID in (" + model.Property + ")");
-            return model;
+
+            return dal.GetModel(ForumID, GiftID, Qty, PostUID, ReceiptUID, PostTime);
         }
+
 
         /// <summary>
         /// 获得数据列表
@@ -68,7 +73,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Product_Ext> GetModelList(string strWhere)
+        public List<WebApi_Model.T_Forum_Gift> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -76,20 +81,18 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Product_Ext> DataTableToList(DataTable dt)
+        public List<WebApi_Model.T_Forum_Gift> DataTableToList(DataTable dt)
         {
-            List<WebApi_Model.T_Product_Ext> modelList = new List<WebApi_Model.T_Product_Ext>();
+            List<WebApi_Model.T_Forum_Gift> modelList = new List<WebApi_Model.T_Forum_Gift>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WebApi_Model.T_Product_Ext model;
+                WebApi_Model.T_Forum_Gift model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);
                     if (model != null)
                     {
-                        T_Product_Property tpp = new T_Product_Property();
-                        model.HasProperty = tpp.GetModelList("PropertyID in (" + model.Property + ")");
                         modelList.Add(model);
                     }
                 }

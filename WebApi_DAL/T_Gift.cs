@@ -7,11 +7,11 @@ using WebApi_DBUtility;
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_Product_Ext
+    /// 数据访问类:T_Gift
     /// </summary>
-    public partial class T_Product_Ext
+    public partial class T_Gift
     {
-        public T_Product_Ext()
+        public T_Gift()
         { }
         #region  BasicMethod
 
@@ -19,29 +19,23 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Product_Ext model)
+        public int Add(WebApi_Model.T_Gift model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_Product_Ext(");
-            strSql.Append("ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property)");
+            strSql.Append("insert into T_Gift(");
+            strSql.Append("GiftName,GiftICO,TuiMao,IsActive)");
             strSql.Append(" values (");
-            strSql.Append("@ProductID,@Price,@PropertyA,@PropertyB,@PropertyC,@Stock,@Property)");
+            strSql.Append("@GiftName,@GiftICO,@TuiMao,@IsActive)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Price", SqlDbType.Decimal,9),
-					new SqlParameter("@PropertyA", SqlDbType.Int,4),
-					new SqlParameter("@PropertyB", SqlDbType.Int,4),
-					new SqlParameter("@PropertyC", SqlDbType.Int,4),
-					new SqlParameter("@Stock", SqlDbType.Int,4),
-					new SqlParameter("@Property", SqlDbType.NVarChar,50)};
-            parameters[0].Value = model.ProductID;
-            parameters[1].Value = model.Price;
-            parameters[2].Value = model.PropertyA;
-            parameters[3].Value = model.PropertyB;
-            parameters[4].Value = model.PropertyC;
-            parameters[5].Value = model.Stock;
-            parameters[6].Value = model.Property;
+					new SqlParameter("@GiftName", SqlDbType.NVarChar,30),
+					new SqlParameter("@GiftICO", SqlDbType.NVarChar,30),
+					new SqlParameter("@TuiMao", SqlDbType.Int,4),
+					new SqlParameter("@IsActive", SqlDbType.Int,4)};
+            parameters[0].Value = model.GiftName;
+            parameters[1].Value = model.GiftICO;
+            parameters[2].Value = model.TuiMao;
+            parameters[3].Value = model.IsActive;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -56,35 +50,26 @@ namespace WebApi_DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Product_Ext model)
+        public bool Update(WebApi_Model.T_Gift model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_Product_Ext set ");
-            strSql.Append("ProductID=@ProductID,");
-            strSql.Append("Price=@Price,");
-            strSql.Append("PropertyA=@PropertyA,");
-            strSql.Append("PropertyB=@PropertyB,");
-            strSql.Append("PropertyC=@PropertyC,");
-            strSql.Append("Stock=@Stock,");
-            strSql.Append("Property=@Property");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("update T_Gift set ");
+            strSql.Append("GiftName=@GiftName,");
+            strSql.Append("GiftICO=@GiftICO,");
+            strSql.Append("TuiMao=@TuiMao,");
+            strSql.Append("IsActive=@IsActive");
+            strSql.Append(" where GiftID=@GiftID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Price", SqlDbType.Decimal,9),
-					new SqlParameter("@PropertyA", SqlDbType.Int,4),
-					new SqlParameter("@PropertyB", SqlDbType.Int,4),
-					new SqlParameter("@PropertyC", SqlDbType.Int,4),
-					new SqlParameter("@Stock", SqlDbType.Int,4),
-					new SqlParameter("@Property", SqlDbType.NVarChar,50),
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)};
-            parameters[0].Value = model.ProductID;
-            parameters[1].Value = model.Price;
-            parameters[2].Value = model.PropertyA;
-            parameters[3].Value = model.PropertyB;
-            parameters[4].Value = model.PropertyC;
-            parameters[5].Value = model.Stock;
-            parameters[6].Value = model.Property;
-            parameters[7].Value = model.ProductExtID;
+					new SqlParameter("@GiftName", SqlDbType.NVarChar,30),
+					new SqlParameter("@GiftICO", SqlDbType.NVarChar,30),
+					new SqlParameter("@TuiMao", SqlDbType.Int,4),
+					new SqlParameter("@IsActive", SqlDbType.Int,4),
+					new SqlParameter("@GiftID", SqlDbType.Int,4)};
+            parameters[0].Value = model.GiftName;
+            parameters[1].Value = model.GiftICO;
+            parameters[2].Value = model.TuiMao;
+            parameters[3].Value = model.IsActive;
+            parameters[4].Value = model.GiftID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -100,16 +85,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ProductExtID)
+        public bool Delete(int GiftID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Ext ");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("delete from T_Gift ");
+            strSql.Append(" where GiftID=@GiftID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)
+					new SqlParameter("@GiftID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ProductExtID;
+            parameters[0].Value = GiftID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -124,11 +109,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string ProductExtIDlist)
+        public bool DeleteList(string GiftIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Ext ");
-            strSql.Append(" where ProductExtID in (" + ProductExtIDlist + ")  ");
+            strSql.Append("delete from T_Gift ");
+            strSql.Append(" where GiftID in (" + GiftIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -144,18 +129,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext GetModel(int ProductExtID)
+        public WebApi_Model.T_Gift GetModel(int GiftID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property from T_Product_Ext ");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("select  top 1 GiftID,GiftName,GiftICO,TuiMao,IsActive from T_Gift ");
+            strSql.Append(" where GiftID=@GiftID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)
+					new SqlParameter("@GiftID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ProductExtID;
+            parameters[0].Value = GiftID;
 
-            WebApi_Model.T_Product_Ext model = new WebApi_Model.T_Product_Ext();
+            WebApi_Model.T_Gift model = new WebApi_Model.T_Gift();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -171,45 +156,31 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext DataRowToModel(DataRow row)
+        public WebApi_Model.T_Gift DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_Product_Ext model = new WebApi_Model.T_Product_Ext();
+            WebApi_Model.T_Gift model = new WebApi_Model.T_Gift();
             if (row != null)
             {
-                if (row["ProductExtID"] != null && row["ProductExtID"].ToString() != "")
+                if (row["GiftID"] != null && row["GiftID"].ToString() != "")
                 {
-                    model.ProductExtID = int.Parse(row["ProductExtID"].ToString());
+                    model.GiftID = int.Parse(row["GiftID"].ToString());
                 }
-                if (row["ProductID"] != null && row["ProductID"].ToString() != "")
+                if (row["GiftName"] != null)
                 {
-                    model.ProductID = int.Parse(row["ProductID"].ToString());
+                    model.GiftName = row["GiftName"].ToString();
                 }
-                if (row["Price"] != null && row["Price"].ToString() != "")
+                if (row["GiftICO"] != null)
                 {
-                    model.Price = decimal.Parse(row["Price"].ToString());
+                    model.GiftICO = row["GiftICO"].ToString();
                 }
-                if (row["PropertyA"] != null && row["PropertyA"].ToString() != "")
+                if (row["TuiMao"] != null && row["TuiMao"].ToString() != "")
                 {
-                    model.PropertyA = int.Parse(row["PropertyA"].ToString());
+                    model.TuiMao = int.Parse(row["TuiMao"].ToString());
                 }
-                if (row["PropertyB"] != null && row["PropertyB"].ToString() != "")
+                if (row["IsActive"] != null && row["IsActive"].ToString() != "")
                 {
-                    model.PropertyB = int.Parse(row["PropertyB"].ToString());
+                    model.IsActive = int.Parse(row["IsActive"].ToString());
                 }
-                if (row["PropertyC"] != null && row["PropertyC"].ToString() != "")
-                {
-                    model.PropertyC = int.Parse(row["PropertyC"].ToString());
-                }
-                if (row["Stock"] != null && row["Stock"].ToString() != "")
-                {
-                    model.Stock = int.Parse(row["Stock"].ToString());
-                }
-                if (row["Property"] != null)
-                {
-                    model.Property = row["Property"].ToString();
-                }
-
-                //model.HasProperty = 
             }
             return model;
         }
@@ -220,8 +191,8 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property ");
-            strSql.Append(" FROM T_Product_Ext ");
+            strSql.Append("select GiftID,GiftName,GiftICO,TuiMao,IsActive ");
+            strSql.Append(" FROM T_Gift ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -240,8 +211,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property ");
-            strSql.Append(" FROM T_Product_Ext ");
+            strSql.Append(" GiftID,GiftName,GiftICO,TuiMao,IsActive ");
+            strSql.Append(" FROM T_Gift ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -256,7 +227,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_Product_Ext ");
+            strSql.Append("select count(1) FROM T_Gift ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -285,9 +256,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.ProductExtID desc");
+                strSql.Append("order by T.GiftID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_Product_Ext T ");
+            strSql.Append(")AS Row, T.*  from T_Gift T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -312,14 +283,14 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_Product_Ext";
-            parameters[1].Value = "ProductExtID";
+            parameters[0].Value = "T_Gift";
+            parameters[1].Value = "GiftID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;
             parameters[5].Value = 0;
             parameters[6].Value = strWhere;	
-            return DBHelper.RunProcedure("UP_GetRecordByPage",parameters,"ds");
+            return DbHelperSQL.RunProcedure("UP_GetRecordByPage",parameters,"ds");
         }*/
 
         #endregion  BasicMethod

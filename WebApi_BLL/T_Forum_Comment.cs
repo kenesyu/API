@@ -1,23 +1,24 @@
 ﻿using System;
 using System.Data;
 using System.Collections.Generic;
+
 using WebApi_Model;
 namespace WebApi_BLL
 {
     /// <summary>
-    /// 商品扩展
+    /// T_Forum_Comment
     /// </summary>
-    public partial class T_Product_Ext
+    public partial class T_Forum_Comment
     {
-        private readonly WebApi_DAL.T_Product_Ext dal = new WebApi_DAL.T_Product_Ext();
-        public T_Product_Ext()
+        private readonly WebApi_DAL.T_Forum_Comment dal = new WebApi_DAL.T_Forum_Comment();
+        public T_Forum_Comment()
         { }
         #region  BasicMethod
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Product_Ext model)
+        public int Add(WebApi_Model.T_Forum_Comment model)
         {
             return dal.Add(model);
         }
@@ -25,7 +26,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Product_Ext model)
+        public bool Update(WebApi_Model.T_Forum_Comment model)
         {
             return dal.Update(model);
         }
@@ -33,22 +34,20 @@ namespace WebApi_BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ProductExtID)
+        public bool Delete(int CommentID)
         {
 
-            return dal.Delete(ProductExtID);
+            return dal.Delete(CommentID);
         }
 
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext GetModel(int ProductExtID)
+        public WebApi_Model.T_Forum_Comment GetModel(int CommentID)
         {
-            WebApi_Model.T_Product_Ext model = dal.GetModel(ProductExtID);
-            T_Product_Property tpp = new T_Product_Property();
-            model.HasProperty = tpp.GetModelList("PropertyID in (" + model.Property + ")");
-            return model;
+
+            return dal.GetModel(CommentID);
         }
 
         /// <summary>
@@ -68,7 +67,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Product_Ext> GetModelList(string strWhere)
+        public List<WebApi_Model.T_Forum_Comment> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -76,20 +75,18 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Product_Ext> DataTableToList(DataTable dt)
+        public List<WebApi_Model.T_Forum_Comment> DataTableToList(DataTable dt)
         {
-            List<WebApi_Model.T_Product_Ext> modelList = new List<WebApi_Model.T_Product_Ext>();
+            List<WebApi_Model.T_Forum_Comment> modelList = new List<WebApi_Model.T_Forum_Comment>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WebApi_Model.T_Product_Ext model;
+                WebApi_Model.T_Forum_Comment model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);
                     if (model != null)
                     {
-                        T_Product_Property tpp = new T_Product_Property();
-                        model.HasProperty = tpp.GetModelList("PropertyID in (" + model.Property + ")");
                         modelList.Add(model);
                     }
                 }

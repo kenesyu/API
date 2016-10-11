@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="T_Forum_Category.cs" />
+    <Compile Include="T_Forum_Comment.cs" />
+    <Compile Include="T_Forum_Gift.cs" />
+    <Compile Include="T_Forum_Photo.cs" />
+    <Compile Include="T_Forums.cs" />
+    <Compile Include="T_Gift.cs" />
     <Compile Include="T_User_ShopCar.cs" />
     <Compile Include="T_Product_OrderDetails.cs" />
     <Compile Include="T_Product_Orders.cs" />

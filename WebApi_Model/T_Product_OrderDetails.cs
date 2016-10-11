@@ -16,6 +16,23 @@ namespace WebApi_Model
         private int? _productid;
         private int? _productextid;
         private int? _qty;
+        private T_Product _product;
+        private T_Product_Ext _product_ext;
+
+
+
+        public T_Product Product
+        {
+            set { _product = value; }
+            get { return _product; }
+        }
+
+        public T_Product_Ext Product_Ext
+        {
+            set { _product_ext = value; }
+            get { return _product_ext; }
+        }
+
         /// <summary>
         /// 
         /// </summary>

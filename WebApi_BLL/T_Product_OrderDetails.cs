@@ -84,6 +84,10 @@ namespace WebApi_BLL
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);
+                    T_Product tpbll = new T_Product();
+                    model.Product = tpbll.GetDetailsByID((int)model.ProductID, true);
+                    T_Product_Ext tpebll = new T_Product_Ext();
+                    model.Product_Ext = tpebll.GetModel((int)model.ProductExtID);
                     if (model != null)
                     {
                         modelList.Add(model);

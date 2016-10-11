@@ -263,7 +263,9 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Trading\Models\" />
     <Folder Include="Areas\Trading\Views\Shared\" />
+    <Folder Include="Content\ICON\" />
     <Folder Include="Content\IndexSetting\" />
+    <Folder Include="Content\Products\" />
     <Folder Include="Content\User_Avatar\" />
     <Folder Include="lib\" />
     <Folder Include="Models\" />

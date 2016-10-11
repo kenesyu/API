@@ -29,6 +29,7 @@ namespace WebApi.Areas.Trading.Controllers
                 newmodel.SignDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 newmodel.Type = 0;
                 bll.Add(newmodel);
+                Reward(UID);
                 //return Ok(ReturnJsonResult.GetJsonResult(1, "签到成功", true));
                 return GetUserSign(UID, DateTime.Now.ToString("yyyy-MM"));
             }
@@ -67,6 +68,7 @@ namespace WebApi.Areas.Trading.Controllers
                 newmodel.Type = 1;
                 newmodel.ReSignDate = DateTime.Now;
                 bll.Add(newmodel);
+                Reward(UID);
                 //return Ok(ReturnJsonResult.GetJsonResult(1, "签到成功", true));
                 return GetUserSign(UID, DateTime.Now.ToString("yyyy-MM"));
             }
@@ -118,6 +120,25 @@ namespace WebApi.Areas.Trading.Controllers
 
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
             //return null;
+        }
+
+        public bool Reward(int UID) {
+            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+            WebApi_Model.T_User model = tubll.GetModel(UID);
+            if (model.VipLevel == 0) {
+                model.PiaoZi += 100;
+            }
+            else if (model.VipLevel == 1 || model.VipLevel == 2) {
+                model.PiaoZi += 500;
+            }
+
+            #region 连续逻辑暂无
+
+            #endregion
+
+            tubll.Update(model);
+
+            return true;
         }
 
         #endregion

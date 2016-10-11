@@ -7,11 +7,11 @@ using WebApi_DBUtility;
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_Product_Ext
+    /// 数据访问类:T_Forum_Photo
     /// </summary>
-    public partial class T_Product_Ext
+    public partial class T_Forum_Photo
     {
-        public T_Product_Ext()
+        public T_Forum_Photo()
         { }
         #region  BasicMethod
 
@@ -19,29 +19,19 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Product_Ext model)
+        public int Add(WebApi_Model.T_Forum_Photo model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_Product_Ext(");
-            strSql.Append("ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property)");
+            strSql.Append("insert into T_Forum_Photo(");
+            strSql.Append("ForumID,Photo)");
             strSql.Append(" values (");
-            strSql.Append("@ProductID,@Price,@PropertyA,@PropertyB,@PropertyC,@Stock,@Property)");
+            strSql.Append("@ForumID,@Photo)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Price", SqlDbType.Decimal,9),
-					new SqlParameter("@PropertyA", SqlDbType.Int,4),
-					new SqlParameter("@PropertyB", SqlDbType.Int,4),
-					new SqlParameter("@PropertyC", SqlDbType.Int,4),
-					new SqlParameter("@Stock", SqlDbType.Int,4),
-					new SqlParameter("@Property", SqlDbType.NVarChar,50)};
-            parameters[0].Value = model.ProductID;
-            parameters[1].Value = model.Price;
-            parameters[2].Value = model.PropertyA;
-            parameters[3].Value = model.PropertyB;
-            parameters[4].Value = model.PropertyC;
-            parameters[5].Value = model.Stock;
-            parameters[6].Value = model.Property;
+					new SqlParameter("@ForumID", SqlDbType.Int,4),
+					new SqlParameter("@Photo", SqlDbType.NVarChar,50)};
+            parameters[0].Value = model.ForumID;
+            parameters[1].Value = model.Photo;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -56,35 +46,20 @@ namespace WebApi_DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Product_Ext model)
+        public bool Update(WebApi_Model.T_Forum_Photo model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_Product_Ext set ");
-            strSql.Append("ProductID=@ProductID,");
-            strSql.Append("Price=@Price,");
-            strSql.Append("PropertyA=@PropertyA,");
-            strSql.Append("PropertyB=@PropertyB,");
-            strSql.Append("PropertyC=@PropertyC,");
-            strSql.Append("Stock=@Stock,");
-            strSql.Append("Property=@Property");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("update T_Forum_Photo set ");
+            strSql.Append("ForumID=@ForumID,");
+            strSql.Append("Photo=@Photo");
+            strSql.Append(" where ForumPhotoID=@ForumPhotoID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Price", SqlDbType.Decimal,9),
-					new SqlParameter("@PropertyA", SqlDbType.Int,4),
-					new SqlParameter("@PropertyB", SqlDbType.Int,4),
-					new SqlParameter("@PropertyC", SqlDbType.Int,4),
-					new SqlParameter("@Stock", SqlDbType.Int,4),
-					new SqlParameter("@Property", SqlDbType.NVarChar,50),
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)};
-            parameters[0].Value = model.ProductID;
-            parameters[1].Value = model.Price;
-            parameters[2].Value = model.PropertyA;
-            parameters[3].Value = model.PropertyB;
-            parameters[4].Value = model.PropertyC;
-            parameters[5].Value = model.Stock;
-            parameters[6].Value = model.Property;
-            parameters[7].Value = model.ProductExtID;
+					new SqlParameter("@ForumID", SqlDbType.Int,4),
+					new SqlParameter("@Photo", SqlDbType.NVarChar,50),
+					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)};
+            parameters[0].Value = model.ForumID;
+            parameters[1].Value = model.Photo;
+            parameters[2].Value = model.ForumPhotoID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -100,16 +75,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ProductExtID)
+        public bool Delete(int ForumPhotoID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Ext ");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("delete from T_Forum_Photo ");
+            strSql.Append(" where ForumPhotoID=@ForumPhotoID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)
+					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ProductExtID;
+            parameters[0].Value = ForumPhotoID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -124,11 +99,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string ProductExtIDlist)
+        public bool DeleteList(string ForumPhotoIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Product_Ext ");
-            strSql.Append(" where ProductExtID in (" + ProductExtIDlist + ")  ");
+            strSql.Append("delete from T_Forum_Photo ");
+            strSql.Append(" where ForumPhotoID in (" + ForumPhotoIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -144,18 +119,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext GetModel(int ProductExtID)
+        public WebApi_Model.T_Forum_Photo GetModel(int ForumPhotoID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property from T_Product_Ext ");
-            strSql.Append(" where ProductExtID=@ProductExtID");
+            strSql.Append("select  top 1 ForumPhotoID,ForumID,Photo from T_Forum_Photo ");
+            strSql.Append(" where ForumPhotoID=@ForumPhotoID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ProductExtID", SqlDbType.Int,4)
+					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ProductExtID;
+            parameters[0].Value = ForumPhotoID;
 
-            WebApi_Model.T_Product_Ext model = new WebApi_Model.T_Product_Ext();
+            WebApi_Model.T_Forum_Photo model = new WebApi_Model.T_Forum_Photo();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -171,45 +146,23 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Product_Ext DataRowToModel(DataRow row)
+        public WebApi_Model.T_Forum_Photo DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_Product_Ext model = new WebApi_Model.T_Product_Ext();
+            WebApi_Model.T_Forum_Photo model = new WebApi_Model.T_Forum_Photo();
             if (row != null)
             {
-                if (row["ProductExtID"] != null && row["ProductExtID"].ToString() != "")
+                if (row["ForumPhotoID"] != null && row["ForumPhotoID"].ToString() != "")
                 {
-                    model.ProductExtID = int.Parse(row["ProductExtID"].ToString());
+                    model.ForumPhotoID = int.Parse(row["ForumPhotoID"].ToString());
                 }
-                if (row["ProductID"] != null && row["ProductID"].ToString() != "")
+                if (row["ForumID"] != null && row["ForumID"].ToString() != "")
                 {
-                    model.ProductID = int.Parse(row["ProductID"].ToString());
+                    model.ForumID = int.Parse(row["ForumID"].ToString());
                 }
-                if (row["Price"] != null && row["Price"].ToString() != "")
+                if (row["Photo"] != null)
                 {
-                    model.Price = decimal.Parse(row["Price"].ToString());
+                    model.Photo = row["Photo"].ToString();
                 }
-                if (row["PropertyA"] != null && row["PropertyA"].ToString() != "")
-                {
-                    model.PropertyA = int.Parse(row["PropertyA"].ToString());
-                }
-                if (row["PropertyB"] != null && row["PropertyB"].ToString() != "")
-                {
-                    model.PropertyB = int.Parse(row["PropertyB"].ToString());
-                }
-                if (row["PropertyC"] != null && row["PropertyC"].ToString() != "")
-                {
-                    model.PropertyC = int.Parse(row["PropertyC"].ToString());
-                }
-                if (row["Stock"] != null && row["Stock"].ToString() != "")
-                {
-                    model.Stock = int.Parse(row["Stock"].ToString());
-                }
-                if (row["Property"] != null)
-                {
-                    model.Property = row["Property"].ToString();
-                }
-
-                //model.HasProperty = 
             }
             return model;
         }
@@ -220,8 +173,8 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property ");
-            strSql.Append(" FROM T_Product_Ext ");
+            strSql.Append("select ForumPhotoID,ForumID,Photo ");
+            strSql.Append(" FROM T_Forum_Photo ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -240,8 +193,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ProductExtID,ProductID,Price,PropertyA,PropertyB,PropertyC,Stock,Property ");
-            strSql.Append(" FROM T_Product_Ext ");
+            strSql.Append(" ForumPhotoID,ForumID,Photo ");
+            strSql.Append(" FROM T_Forum_Photo ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -256,7 +209,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_Product_Ext ");
+            strSql.Append("select count(1) FROM T_Forum_Photo ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -285,9 +238,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.ProductExtID desc");
+                strSql.Append("order by T.ForumPhotoID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_Product_Ext T ");
+            strSql.Append(")AS Row, T.*  from T_Forum_Photo T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -312,8 +265,8 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_Product_Ext";
-            parameters[1].Value = "ProductExtID";
+            parameters[0].Value = "T_Forum_Photo";
+            parameters[1].Value = "ForumPhotoID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;

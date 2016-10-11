@@ -91,25 +91,19 @@ namespace WebApi_BLL
                         T_Product_Ext tpebll = new T_Product_Ext();
                         model.Product_Ext = tpebll.GetModel((int)model.ProductExtID);
 
-                        if (model.Product_Ext != null)
-                        {
-                            T_Product_Property tppbll = new T_Product_Property();
-                            List<WebApi_Model.T_Product_Property> list = new List<WebApi_Model.T_Product_Property>();
-                            if (model.Product_Ext.PropertyA != null && model.Product_Ext.PropertyA.ToString() != "")
-                            {
-                                list.Add(tppbll.GetModel((int)model.Product_Ext.PropertyA));
-                            }
-                            if (model.Product_Ext.PropertyB != null && model.Product_Ext.PropertyB.ToString() != "")
-                            {
-                                list.Add(tppbll.GetModel((int)model.Product_Ext.PropertyB));
-                            }
-                            if (model.Product_Ext.PropertyC != null && model.Product_Ext.PropertyC.ToString() != "")
-                            {
-                                list.Add(tppbll.GetModel((int)model.Product_Ext.PropertyC));
-                            }
-                            model.Product_Property = list;
-                        }
+                        //if (model.Product_Ext != null)
+                        //{
+                        //    if (model.Product_Ext.Property != null && model.Product_Ext.Property != "") {
+                        //        T_Product_Property tppbll = new T_Product_Property();
+                        //        List<WebApi_Model.T_Product_Property> list = new List<WebApi_Model.T_Product_Property>();
+                        //        string[] key = model.Product_Ext.Property.Split(',');
+                        //        for (int i = 0; i < key.Length; i++) {
+                        //            list.Add(tppbll.GetModel(int.Parse(key[i])));
+                        //        }
+                        //        model.Product_Property = list;
+                        //    }
 
+                        //}
                         modelList.Add(model);
                     }
                 }
