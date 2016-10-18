@@ -121,7 +121,7 @@ namespace WebApi.Areas.Trading.Controllers
             if (user.UID.ToString() != "")
                 return Ok(ReturnJsonResult.GetJsonResult(1, "注册成功！", JsonConvert.SerializeObject(user)));
             else
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "注册失败！", JsonConvert.SerializeObject(user))); 
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "注册失败！", JsonConvert.SerializeObject(user)));
         }
 
         [HttpPost]
@@ -138,7 +138,7 @@ namespace WebApi.Areas.Trading.Controllers
                 file.SaveAs(savePath);
                 if (bll.UpdateAvatar(uid, newName))
                 {
-                    return Ok(ReturnJsonResult.GetJsonResult(1, "Succeed！", JsonConvert.SerializeObject(newName)));
+                    return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(newName)));
                 }
                 else
                 {
@@ -153,14 +153,21 @@ namespace WebApi.Areas.Trading.Controllers
         [HttpPost]
         public IHttpActionResult UpdateUser(dynamic model)
         {
-            T_User user = (T_User)Newtonsoft.Json.JsonConvert.DeserializeObject(model, typeof(T_User));
-            if (bll.Update(model))
+            try
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "Succeed！", true));
+                T_User user = (T_User)Newtonsoft.Json.JsonConvert.DeserializeObject(model, typeof(T_User));
+                if (bll.Update(model))
+                {
+                    return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
+                }
+                else
+                {
+                    return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", false));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "Faild！", false));
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", ex.Message));
             }
         }
 

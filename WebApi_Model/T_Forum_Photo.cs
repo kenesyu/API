@@ -13,6 +13,8 @@ namespace WebApi_Model
         private int _forumphotoid;
         private int? _forumid;
         private string _photo;
+        private DateTime? _uploadtime;
+        private int? _paytype;
         /// <summary>
         /// 
         /// </summary>
@@ -36,6 +38,22 @@ namespace WebApi_Model
         {
             set { _photo = value; }
             get { return _photo; }
+        }
+        /// <summary>
+        /// 上传时间
+        /// </summary>
+        public DateTime? UploadTime
+        {
+            set { _uploadtime = value; }
+            get { return _uploadtime; }
+        }
+        /// <summary>
+        /// 0 免费 1 收费
+        /// </summary>
+        public int? PayType
+        {
+            set { _paytype = value; }
+            get { return _paytype; }
         }
         #endregion Model
 

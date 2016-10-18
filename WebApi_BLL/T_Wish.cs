@@ -6,19 +6,19 @@ using WebApi_Model;
 namespace WebApi_BLL
 {
     /// <summary>
-    /// 用户评贴
+    /// 用户心愿计划
     /// </summary>
-    public partial class T_Forums
+    public partial class T_Wish
     {
-        private readonly WebApi_DAL.T_Forums dal = new WebApi_DAL.T_Forums();
-        public T_Forums()
+        private readonly WebApi_DAL.T_Wish dal = new WebApi_DAL.T_Wish();
+        public T_Wish()
         { }
         #region  BasicMethod
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Forums model)
+        public int Add(WebApi_Model.T_Wish model)
         {
             return dal.Add(model);
         }
@@ -26,7 +26,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Forums model)
+        public bool Update(WebApi_Model.T_Wish model)
         {
             return dal.Update(model);
         }
@@ -34,23 +34,19 @@ namespace WebApi_BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ForumID)
+        public bool Delete(int WishID)
         {
 
-            return dal.Delete(ForumID);
+            return dal.Delete(WishID);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Forums GetModel(int ForumID)
+        public WebApi_Model.T_Wish GetModel(int WishID)
         {
-            WebApi_Model.T_Forums model = dal.GetModel(ForumID);
-            if (model != null && model.TuiMao != 0) {
-                T_Forum_Photo fbll = new T_Forum_Photo();
-                model.Forum_Photo = fbll.GetModelList("ForumID=" + model.ForumID);
-            }
-            return model;
+
+            return dal.GetModel(WishID);
         }
 
         /// <summary>
@@ -70,7 +66,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Forums> GetModelList(string strWhere)
+        public List<WebApi_Model.T_Wish> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -78,13 +74,13 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Forums> DataTableToList(DataTable dt)
+        public List<WebApi_Model.T_Wish> DataTableToList(DataTable dt)
         {
-            List<WebApi_Model.T_Forums> modelList = new List<WebApi_Model.T_Forums>();
+            List<WebApi_Model.T_Wish> modelList = new List<WebApi_Model.T_Wish>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WebApi_Model.T_Forums model;
+                WebApi_Model.T_Wish model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);

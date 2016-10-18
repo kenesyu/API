@@ -7,11 +7,11 @@ using WebApi_DBUtility;
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_Forums
+    /// 数据访问类:T_Wish
     /// </summary>
-    public partial class T_Forums
+    public partial class T_Wish
     {
-        public T_Forums()
+        public T_Wish()
         { }
         #region  BasicMethod
 
@@ -19,41 +19,35 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Forums model)
+        public int Add(WebApi_Model.T_Wish model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_Forums(");
-            strSql.Append("UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star)");
+            strSql.Append("insert into T_Wish(");
+            strSql.Append("UID,Title,LinkUrl,WishName,PostDate,Remark,Price,Status,TuiMao,CompleteDate)");
             strSql.Append(" values (");
-            strSql.Append("@UID,@Title,@FromIP,@FromDevice,@CategoryID,@Content,@PostTime,@Status,@CoverPhoto,@TuiMao,@Flag,@ProductID,@Star)");
+            strSql.Append("@UID,@Title,@LinkUrl,@WishName,@PostDate,@Remark,@Price,@Status,@TuiMao,@CompleteDate)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@UID", SqlDbType.Int,4),
-					new SqlParameter("@Title", SqlDbType.NVarChar,50),
-					new SqlParameter("@FromIP", SqlDbType.NVarChar,50),
-					new SqlParameter("@FromDevice", SqlDbType.NVarChar,50),
-					new SqlParameter("@CategoryID", SqlDbType.Int,4),
-					new SqlParameter("@Content", SqlDbType.NVarChar,4000),
-					new SqlParameter("@PostTime", SqlDbType.DateTime),
+					new SqlParameter("@Title", SqlDbType.NVarChar,100),
+					new SqlParameter("@LinkUrl", SqlDbType.NVarChar,300),
+					new SqlParameter("@WishName", SqlDbType.NVarChar,50),
+					new SqlParameter("@PostDate", SqlDbType.DateTime),
+					new SqlParameter("@Remark", SqlDbType.NVarChar,100),
+					new SqlParameter("@Price", SqlDbType.Decimal,9),
 					new SqlParameter("@Status", SqlDbType.Int,4),
-					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
 					new SqlParameter("@TuiMao", SqlDbType.Int,4),
-					new SqlParameter("@Flag", SqlDbType.Int,4),
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Star", SqlDbType.Int,4)};
+					new SqlParameter("@CompleteDate", SqlDbType.DateTime)};
             parameters[0].Value = model.UID;
             parameters[1].Value = model.Title;
-            parameters[2].Value = model.FromIP;
-            parameters[3].Value = model.FromDevice;
-            parameters[4].Value = model.CategoryID;
-            parameters[5].Value = model.Content;
-            parameters[6].Value = model.PostTime;
+            parameters[2].Value = model.LinkUrl;
+            parameters[3].Value = model.WishName;
+            parameters[4].Value = model.PostDate;
+            parameters[5].Value = model.Remark;
+            parameters[6].Value = model.Price;
             parameters[7].Value = model.Status;
-            parameters[8].Value = model.CoverPhoto;
-            parameters[9].Value = model.TuiMao;
-            parameters[10].Value = model.Flag;
-            parameters[11].Value = model.ProductID;
-            parameters[12].Value = model.Star;
+            parameters[8].Value = model.TuiMao;
+            parameters[9].Value = model.CompleteDate;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -62,69 +56,50 @@ namespace WebApi_DAL
             }
             else
             {
-                int key = Convert.ToInt32(obj);
-                if (model.Forum_Photo.Count > 0) {
-                    T_Forum_Photo tfp = new T_Forum_Photo();
-                    foreach (WebApi_Model.T_Forum_Photo m in model.Forum_Photo)
-                    {
-                        m.ForumPhotoID = key;
-                        tfp.Update(m);
-                    }
-   
-                }
-                return key;
+                return Convert.ToInt32(obj);
             }
         }
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Forums model)
+        public bool Update(WebApi_Model.T_Wish model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_Forums set ");
+            strSql.Append("update T_Wish set ");
             strSql.Append("UID=@UID,");
             strSql.Append("Title=@Title,");
-            strSql.Append("FromIP=@FromIP,");
-            strSql.Append("FromDevice=@FromDevice,");
-            strSql.Append("CategoryID=@CategoryID,");
-            strSql.Append("Content=@Content,");
-            strSql.Append("PostTime=@PostTime,");
+            strSql.Append("LinkUrl=@LinkUrl,");
+            strSql.Append("WishName=@WishName,");
+            strSql.Append("PostDate=@PostDate,");
+            strSql.Append("Remark=@Remark,");
+            strSql.Append("Price=@Price,");
             strSql.Append("Status=@Status,");
-            strSql.Append("CoverPhoto=@CoverPhoto,");
             strSql.Append("TuiMao=@TuiMao,");
-            strSql.Append("Flag=@Flag,");
-            strSql.Append("ProductID=@ProductID,");
-            strSql.Append("Star=@Star");
-            strSql.Append(" where ForumID=@ForumID");
+            strSql.Append("CompleteDate=@CompleteDate");
+            strSql.Append(" where WishID=@WishID");
             SqlParameter[] parameters = {
 					new SqlParameter("@UID", SqlDbType.Int,4),
-					new SqlParameter("@Title", SqlDbType.NVarChar,50),
-					new SqlParameter("@FromIP", SqlDbType.NVarChar,50),
-					new SqlParameter("@FromDevice", SqlDbType.NVarChar,50),
-					new SqlParameter("@CategoryID", SqlDbType.Int,4),
-					new SqlParameter("@Content", SqlDbType.NVarChar,4000),
-					new SqlParameter("@PostTime", SqlDbType.DateTime),
+					new SqlParameter("@Title", SqlDbType.NVarChar,100),
+					new SqlParameter("@LinkUrl", SqlDbType.NVarChar,300),
+					new SqlParameter("@WishName", SqlDbType.NVarChar,50),
+					new SqlParameter("@PostDate", SqlDbType.DateTime),
+					new SqlParameter("@Remark", SqlDbType.NVarChar,100),
+					new SqlParameter("@Price", SqlDbType.Decimal,9),
 					new SqlParameter("@Status", SqlDbType.Int,4),
-					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
 					new SqlParameter("@TuiMao", SqlDbType.Int,4),
-					new SqlParameter("@Flag", SqlDbType.Int,4),
-					new SqlParameter("@ProductID", SqlDbType.Int,4),
-					new SqlParameter("@Star", SqlDbType.Int,4),
-					new SqlParameter("@ForumID", SqlDbType.Int,4)};
+					new SqlParameter("@CompleteDate", SqlDbType.DateTime),
+					new SqlParameter("@WishID", SqlDbType.Int,4)};
             parameters[0].Value = model.UID;
             parameters[1].Value = model.Title;
-            parameters[2].Value = model.FromIP;
-            parameters[3].Value = model.FromDevice;
-            parameters[4].Value = model.CategoryID;
-            parameters[5].Value = model.Content;
-            parameters[6].Value = model.PostTime;
+            parameters[2].Value = model.LinkUrl;
+            parameters[3].Value = model.WishName;
+            parameters[4].Value = model.PostDate;
+            parameters[5].Value = model.Remark;
+            parameters[6].Value = model.Price;
             parameters[7].Value = model.Status;
-            parameters[8].Value = model.CoverPhoto;
-            parameters[9].Value = model.TuiMao;
-            parameters[10].Value = model.Flag;
-            parameters[11].Value = model.ProductID;
-            parameters[12].Value = model.Star;
-            parameters[13].Value = model.ForumID;
+            parameters[8].Value = model.TuiMao;
+            parameters[9].Value = model.CompleteDate;
+            parameters[10].Value = model.WishID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -140,16 +115,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ForumID)
+        public bool Delete(int WishID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Forums ");
-            strSql.Append(" where ForumID=@ForumID");
+            strSql.Append("delete from T_Wish ");
+            strSql.Append(" where WishID=@WishID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ForumID", SqlDbType.Int,4)
+					new SqlParameter("@WishID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ForumID;
+            parameters[0].Value = WishID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -164,11 +139,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string ForumIDlist)
+        public bool DeleteList(string WishIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Forums ");
-            strSql.Append(" where ForumID in (" + ForumIDlist + ")  ");
+            strSql.Append("delete from T_Wish ");
+            strSql.Append(" where WishID in (" + WishIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -184,17 +159,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Forums GetModel(int ForumID)
+        public WebApi_Model.T_Wish GetModel(int WishID)
         {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star from T_Forums ");
-            strSql.Append(" where ForumID=@ForumID");
-            SqlParameter[] parameters = {
-					new SqlParameter("@ForumID", SqlDbType.Int,4)
-			};
-            parameters[0].Value = ForumID;
 
-            WebApi_Model.T_Forums model = new WebApi_Model.T_Forums();
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select  top 1 WishID,UID,Title,LinkUrl,WishName,PostDate,Remark,Price,Status,TuiMao,CompleteDate from T_Wish ");
+            strSql.Append(" where WishID=@WishID");
+            SqlParameter[] parameters = {
+					new SqlParameter("@WishID", SqlDbType.Int,4)
+			};
+            parameters[0].Value = WishID;
+
+            WebApi_Model.T_Wish model = new WebApi_Model.T_Wish();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -210,14 +186,14 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Forums DataRowToModel(DataRow row)
+        public WebApi_Model.T_Wish DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_Forums model = new WebApi_Model.T_Forums();
+            WebApi_Model.T_Wish model = new WebApi_Model.T_Wish();
             if (row != null)
             {
-                if (row["ForumID"] != null && row["ForumID"].ToString() != "")
+                if (row["WishID"] != null && row["WishID"].ToString() != "")
                 {
-                    model.ForumID = int.Parse(row["ForumID"].ToString());
+                    model.WishID = int.Parse(row["WishID"].ToString());
                 }
                 if (row["UID"] != null && row["UID"].ToString() != "")
                 {
@@ -227,49 +203,37 @@ namespace WebApi_DAL
                 {
                     model.Title = row["Title"].ToString();
                 }
-                if (row["FromIP"] != null)
+                if (row["LinkUrl"] != null)
                 {
-                    model.FromIP = row["FromIP"].ToString();
+                    model.LinkUrl = row["LinkUrl"].ToString();
                 }
-                if (row["FromDevice"] != null)
+                if (row["WishName"] != null)
                 {
-                    model.FromDevice = row["FromDevice"].ToString();
+                    model.WishName = row["WishName"].ToString();
                 }
-                if (row["CategoryID"] != null && row["CategoryID"].ToString() != "")
+                if (row["PostDate"] != null && row["PostDate"].ToString() != "")
                 {
-                    model.CategoryID = int.Parse(row["CategoryID"].ToString());
+                    model.PostDate = DateTime.Parse(row["PostDate"].ToString());
                 }
-                if (row["Content"] != null)
+                if (row["Remark"] != null)
                 {
-                    model.Content = row["Content"].ToString();
+                    model.Remark = row["Remark"].ToString();
                 }
-                if (row["PostTime"] != null && row["PostTime"].ToString() != "")
+                if (row["Price"] != null && row["Price"].ToString() != "")
                 {
-                    model.PostTime = DateTime.Parse(row["PostTime"].ToString());
+                    model.Price = decimal.Parse(row["Price"].ToString());
                 }
                 if (row["Status"] != null && row["Status"].ToString() != "")
                 {
                     model.Status = int.Parse(row["Status"].ToString());
                 }
-                if (row["CoverPhoto"] != null)
-                {
-                    model.CoverPhoto = row["CoverPhoto"].ToString();
-                }
                 if (row["TuiMao"] != null && row["TuiMao"].ToString() != "")
                 {
                     model.TuiMao = int.Parse(row["TuiMao"].ToString());
                 }
-                if (row["Flag"] != null && row["Flag"].ToString() != "")
+                if (row["CompleteDate"] != null && row["CompleteDate"].ToString() != "")
                 {
-                    model.Flag = int.Parse(row["Flag"].ToString());
-                }
-                if (row["ProductID"] != null && row["ProductID"].ToString() != "")
-                {
-                    model.ProductID = int.Parse(row["ProductID"].ToString());
-                }
-                if (row["Star"] != null && row["Star"].ToString() != "")
-                {
-                    model.Star = int.Parse(row["Star"].ToString());
+                    model.CompleteDate = DateTime.Parse(row["CompleteDate"].ToString());
                 }
             }
             return model;
@@ -281,8 +245,8 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star ");
-            strSql.Append(" FROM T_Forums ");
+            strSql.Append("select WishID,UID,Title,LinkUrl,WishName,PostDate,Remark,Price,Status,TuiMao,CompleteDate ");
+            strSql.Append(" FROM T_Wish ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -301,8 +265,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star ");
-            strSql.Append(" FROM T_Forums ");
+            strSql.Append(" WishID,UID,Title,LinkUrl,WishName,PostDate,Remark,Price,Status,TuiMao,CompleteDate ");
+            strSql.Append(" FROM T_Wish ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -317,7 +281,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_Forums ");
+            strSql.Append("select count(1) FROM T_Wish ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -346,9 +310,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.ForumID desc");
+                strSql.Append("order by T.WishID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_Forums T ");
+            strSql.Append(")AS Row, T.*  from T_Wish T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -373,8 +337,8 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_Forums";
-            parameters[1].Value = "ForumID";
+            parameters[0].Value = "T_Wish";
+            parameters[1].Value = "WishID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;

@@ -40,7 +40,6 @@ namespace WebApi_BLL
             return dal.Delete(ForumPhotoID);
         }
 
-
         /// <summary>
         /// 得到一个对象实体
         /// </summary>

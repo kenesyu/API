@@ -138,6 +138,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Trading\Controllers\ForumsController.cs" />
     <Compile Include="Areas\Trading\Controllers\IndexSettingController.cs" />
     <Compile Include="Areas\Trading\Controllers\PhotoCollectionController.cs" />
     <Compile Include="Areas\Trading\Controllers\ProductsController.cs" />
@@ -267,6 +268,7 @@
     <Folder Include="Content\IndexSetting\" />
     <Folder Include="Content\Products\" />
     <Folder Include="Content\User_Avatar\" />
+    <Folder Include="Content\User_Photo\" />
     <Folder Include="lib\" />
     <Folder Include="Models\" />
   </ItemGroup>

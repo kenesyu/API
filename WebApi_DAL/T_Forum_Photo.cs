@@ -23,15 +23,19 @@ namespace WebApi_DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into T_Forum_Photo(");
-            strSql.Append("ForumID,Photo)");
+            strSql.Append("ForumID,Photo,UploadTime,PayType)");
             strSql.Append(" values (");
-            strSql.Append("@ForumID,@Photo)");
+            strSql.Append("@ForumID,@Photo,@UploadTime,@PayType)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@ForumID", SqlDbType.Int,4),
-					new SqlParameter("@Photo", SqlDbType.NVarChar,50)};
+					new SqlParameter("@Photo", SqlDbType.NVarChar,50),
+					new SqlParameter("@UploadTime", SqlDbType.DateTime),
+					new SqlParameter("@PayType", SqlDbType.Int,4)};
             parameters[0].Value = model.ForumID;
             parameters[1].Value = model.Photo;
+            parameters[2].Value = model.UploadTime;
+            parameters[3].Value = model.PayType;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -51,15 +55,21 @@ namespace WebApi_DAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update T_Forum_Photo set ");
             strSql.Append("ForumID=@ForumID,");
-            strSql.Append("Photo=@Photo");
+            strSql.Append("Photo=@Photo,");
+            strSql.Append("UploadTime=@UploadTime,");
+            strSql.Append("PayType=@PayType");
             strSql.Append(" where ForumPhotoID=@ForumPhotoID");
             SqlParameter[] parameters = {
 					new SqlParameter("@ForumID", SqlDbType.Int,4),
 					new SqlParameter("@Photo", SqlDbType.NVarChar,50),
+					new SqlParameter("@UploadTime", SqlDbType.DateTime),
+					new SqlParameter("@PayType", SqlDbType.Int,4),
 					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)};
             parameters[0].Value = model.ForumID;
             parameters[1].Value = model.Photo;
-            parameters[2].Value = model.ForumPhotoID;
+            parameters[2].Value = model.UploadTime;
+            parameters[3].Value = model.PayType;
+            parameters[4].Value = model.ForumPhotoID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -123,7 +133,7 @@ namespace WebApi_DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ForumPhotoID,ForumID,Photo from T_Forum_Photo ");
+            strSql.Append("select  top 1 ForumPhotoID,ForumID,Photo,UploadTime,PayType from T_Forum_Photo ");
             strSql.Append(" where ForumPhotoID=@ForumPhotoID");
             SqlParameter[] parameters = {
 					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)
@@ -163,6 +173,14 @@ namespace WebApi_DAL
                 {
                     model.Photo = row["Photo"].ToString();
                 }
+                if (row["UploadTime"] != null && row["UploadTime"].ToString() != "")
+                {
+                    model.UploadTime = DateTime.Parse(row["UploadTime"].ToString());
+                }
+                if (row["PayType"] != null && row["PayType"].ToString() != "")
+                {
+                    model.PayType = int.Parse(row["PayType"].ToString());
+                }
             }
             return model;
         }
@@ -173,7 +191,7 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ForumPhotoID,ForumID,Photo ");
+            strSql.Append("select ForumPhotoID,ForumID,Photo,UploadTime,PayType ");
             strSql.Append(" FROM T_Forum_Photo ");
             if (strWhere.Trim() != "")
             {
@@ -193,7 +211,7 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ForumPhotoID,ForumID,Photo ");
+            strSql.Append(" ForumPhotoID,ForumID,Photo,UploadTime,PayType ");
             strSql.Append(" FROM T_Forum_Photo ");
             if (strWhere.Trim() != "")
             {

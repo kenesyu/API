@@ -115,7 +115,7 @@ namespace WebApi.Areas.Trading.Controllers
 
             if (Order.OrderDetails == null || Order.OrderDetails.Count == 0)
             {
-                return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", "没有商品"));
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", "没有商品"));
             }
 
             Order.OrderNum = dtNow.Ticks.ToString();
