@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="T_Forum_Activity.cs" />
     <Compile Include="T_Wish.cs" />
     <Compile Include="T_Forum_Category.cs" />
     <Compile Include="T_Forum_Comment.cs" />

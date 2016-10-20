@@ -21,6 +21,21 @@ namespace WebApi_Model
         private int? _status;
         private int? _tuimao;
         private DateTime? _completedate;
+        private string _nickname;
+        private string _headImg;
+
+
+        public string NickName
+        {
+            set { _nickname = value; }
+            get { return _nickname; }
+        }
+
+        public string HeadImg {
+            set { _headImg = value; }
+            get { return _nickname; }
+        }
+
         /// <summary>
         /// 
         /// </summary>

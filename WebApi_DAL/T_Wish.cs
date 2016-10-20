@@ -235,6 +235,17 @@ namespace WebApi_DAL
                 {
                     model.CompleteDate = DateTime.Parse(row["CompleteDate"].ToString());
                 }
+
+                if (row.Table.Columns.Contains("Nickname") && row["Nickname"] != null)
+                {
+                    model.NickName = row["Nickname"].ToString();
+                }
+
+                if (row.Table.Columns.Contains("HeadImg") && row["HeadImg"] != null)
+                {
+                    model.HeadImg = row["HeadImg"].ToString();
+                }
+
             }
             return model;
         }
@@ -265,8 +276,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" WishID,UID,Title,LinkUrl,WishName,PostDate,Remark,Price,Status,TuiMao,CompleteDate ");
-            strSql.Append(" FROM T_Wish ");
+            strSql.Append(" a.WishID,a.UID,a.Title,a.LinkUrl,a.WishName,a.PostDate,a.Remark,a.Price,a.Status,a.TuiMao,a.CompleteDate,b.Nickname,b.HeadImg ");
+            strSql.Append(" FROM T_Wish a inner join T_User b on a.UID = b.UID ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);

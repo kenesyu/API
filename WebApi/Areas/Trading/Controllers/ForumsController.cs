@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -84,6 +85,7 @@ namespace WebApi.Areas.Trading.Controllers
                 }
                 forum.Status = 0;
                 forum.Flag = 0;
+                forum.PostTime = DateTime.Now;
                 int key = bll.Add(forum);
                 forum.ForumID = key;
                 return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(forum)));
@@ -153,6 +155,12 @@ namespace WebApi.Areas.Trading.Controllers
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList(""))));
         }
 
+        [HttpGet]
+        public IHttpActionResult GetCategoryByParentID(int ParentID) {
+            WebApi_BLL.T_Forum_Category bll = new WebApi_BLL.T_Forum_Category();
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList(" ParentID = " + ParentID))));
+        }
+        
         [HttpPost]
         public IHttpActionResult PostWish(dynamic model)
         {
@@ -168,6 +176,15 @@ namespace WebApi.Areas.Trading.Controllers
         public IHttpActionResult GetWishByUID(int UID) {
             WebApi_BLL.T_Wish bll = new WebApi_BLL.T_Wish();
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.GetModelList(" UID = " + UID)))); 
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetOtherWish(int UID)
+        {
+            WebApi_BLL.T_Wish bll = new WebApi_BLL.T_Wish();
+            DataSet ds = bll.GetList(5, " Status = 1 and a.UID not in (" + UID + ")", " WishID desc");
+            List<WebApi_Model.T_Wish> model = bll.DataTableToList(ds.Tables[0]);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
         }
 
         [HttpPost]
@@ -197,5 +214,28 @@ namespace WebApi.Areas.Trading.Controllers
             }       
         }
 
+        [HttpGet]
+        public IHttpActionResult GetForumsActivity() {
+            WebApi_BLL.T_Forum_Activity bll = new WebApi_BLL.T_Forum_Activity();
+            List<WebApi_Model.T_Forum_Activity> model = bll.GetModelList("");
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetTuiJian() {
+            WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
+            DataSet ds = bll.GetList(5,"Status =2 and Flag = 2","ForumID desc");
+            List<WebApi_Model.T_Forums> model = bll.DataTableToList(ds.Tables[0]);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetTopTen()
+        {
+            WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
+            DataSet ds = bll.GetList(10, "Status =2 and Flag = 1", "ForumID desc");
+            List<WebApi_Model.T_Forums> model = bll.DataTableToList(ds.Tables[0]);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
+        }
     }
 }

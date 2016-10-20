@@ -25,6 +25,9 @@ namespace WebApi_Model
 		private int? _flag;
 		private int? _productid;
 		private int? _star;
+		private int? _views;
+		private int? _likes;
+		private int? _commentcount;
         private List<T_Forum_Photo> _forum_Photo;
 		/// <summary>
 		/// 
@@ -138,8 +141,32 @@ namespace WebApi_Model
 			set{ _star=value;}
 			get{return _star;}
 		}
+		/// <summary>
+		/// 查看数
+		/// </summary>
+		public int? Views
+		{
+			set{ _views=value;}
+			get{return _views;}
+		}
+		/// <summary>
+		/// 点赞数
+		/// </summary>
+		public int? Likes
+		{
+			set{ _likes=value;}
+			get{return _likes;}
+		}
+		/// <summary>
+		/// 评论数
+		/// </summary>
+		public int? CommentCount
+		{
+			set{ _commentcount=value;}
+			get{return _commentcount;}
+		}
 
-                public List<T_Forum_Photo> Forum_Photo
+        public List<T_Forum_Photo> Forum_Photo
         {
             set { _forum_Photo = value; }
             get { return _forum_Photo; }
@@ -148,5 +175,4 @@ namespace WebApi_Model
 
 	}
 }
-
 
