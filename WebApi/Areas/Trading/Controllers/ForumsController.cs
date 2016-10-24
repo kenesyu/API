@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Http;
 using Newtonsoft.Json;
 using WebApi_Common;
+using WebApi_DBUtility;
 
 namespace WebApi.Areas.Trading.Controllers
 {
@@ -86,6 +87,10 @@ namespace WebApi.Areas.Trading.Controllers
                 forum.Status = 0;
                 forum.Flag = 0;
                 forum.PostTime = DateTime.Now;
+                forum.Views = 0;
+                forum.Likes = 0;
+                forum.CommentCount = 0;
+                 
                 int key = bll.Add(forum);
                 forum.ForumID = key;
                 return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(forum)));
@@ -235,7 +240,155 @@ namespace WebApi.Areas.Trading.Controllers
             WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
             DataSet ds = bll.GetList(10, "Status =2 and Flag = 1", "ForumID desc");
             List<WebApi_Model.T_Forums> model = bll.DataTableToList(ds.Tables[0]);
+            WebApi_BLL.T_Forum_Photo tfpbll = new WebApi_BLL.T_Forum_Photo();
+            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+
+            foreach (WebApi_Model.T_Forums m in model) {
+                m.Forum_Photo = tfpbll.GetModelList("ForumID = " + m.ForumID);
+                m.User = tubll.GetModel((int)m.UID);
+            }
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
+        }
+
+        [HttpPost]
+        public IHttpActionResult GetFourmList() {
+            int Page = int.Parse(requestHelper.GetRequsetForm("Page", ""));
+            string strWhere = requestHelper.GetRequsetForm("strWhere", "");
+            string strOrder = requestHelper.GetRequsetForm("strOrder", "");
+
+            int TotalPage = 0;
+            int PageSize = 10;
+            if (string.IsNullOrEmpty(strWhere))
+            {
+                strWhere = " 1 = 1";
+            }
+
+            if (string.IsNullOrEmpty(strOrder))
+            {
+                strOrder = " ForumID desc";
+            }
+
+            WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
+            List<WebApi_Model.T_Forums> list = bll.DataTableToList(DBHelper.GetListByPage("T_Forums", Page, PageSize, strWhere, strOrder, out TotalPage).Tables[0]);
+            
+            WebApi_BLL.T_Forum_Photo tfpbll = new WebApi_BLL.T_Forum_Photo();
+            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+            foreach(WebApi_Model.T_Forums m in list){
+                m.Forum_Photo = tfpbll.GetModelList(" ForumID = " + m.ForumID);
+                m.User = tubll.GetModel((int)m.UID);
+            }
+            if (list != null)
+            {
+                return Ok(ReturnJsonResult.GetJsonResult(1, TotalPage.ToString(), JsonConvert.SerializeObject(list)));
+            }
+            else
+            {
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "OK", ""));
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult PostComment(dynamic model) {
+            WebApi_Model.T_Forum_Comment comment = (WebApi_Model.T_Forum_Comment)Newtonsoft.Json.JsonConvert.DeserializeObject(model, typeof(WebApi_Model.T_Forum_Comment));
+            WebApi_BLL.T_Forum_Comment bll = new WebApi_BLL.T_Forum_Comment();
+            WebApi_BLL.T_Forums tfsbll = new WebApi_BLL.T_Forums();
+            comment.CommentDate = DateTime.Now;
+            comment.Status = 0;
+            bll.Add(comment);
+
+            //更新评论数
+            WebApi_Model.T_Forums forum = new WebApi_Model.T_Forums();
+            forum = tfsbll.GetModel((int)comment.ForumID);
+            forum.CommentCount += 1;
+            tfsbll.Update(forum);
+
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(comment)));
+        }
+
+        [HttpGet]
+        public IHttpActionResult ViewForum(int ForumID, int UID)
+        {
+            WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
+            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+            WebApi_BLL.T_Forum_Photo tfpbll = new WebApi_BLL.T_Forum_Photo();
+            WebApi_BLL.T_Forum_Comment tfcbll = new WebApi_BLL.T_Forum_Comment();
+            WebApi_BLL.T_Forum_Buy tfbbll = new WebApi_BLL.T_Forum_Buy();
+
+            WebApi_Model.T_Forums forumModle = bll.GetModel(ForumID);
+            WebApi_Model.T_User userModel = tubll.GetModel(UID);
+            forumModle.Views += 1; //查看数+1
+            bll.Update(forumModle);
+            forumModle.Forum_Photo = tfpbll.GetModelList("ForumID =" + ForumID);
+            forumModle.Forum_Comment = tfcbll.GetModelList("ForumID = " + ForumID);
+            forumModle.Forum_Buy = tfbbll.GetModelList("ForumID=" + ForumID + " and UID = " + UID);
+
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(forumModle)));
+        }
+
+        [HttpPost]
+        public IHttpActionResult BuyForum() {
+            int ForumID = Convert.ToInt32(requestHelper.GetRequsetForm("ForumID", ""));
+            int UID = Convert.ToInt32(requestHelper.GetRequsetForm("UID", ""));
+
+            WebApi_BLL.T_Forum_Buy bll = new WebApi_BLL.T_Forum_Buy();
+            WebApi_BLL.T_Forums tfbll = new WebApi_BLL.T_Forums();
+            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+
+            WebApi_Model.T_User u = tubll.GetModel(UID);
+            WebApi_Model.T_Forums f = tfbll.GetModel(ForumID);
+
+           
+
+            if (u == null || f == null) {
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", JsonConvert.SerializeObject("用户或贴子不存在")));
+            }
+
+            List<WebApi_Model.T_Forum_Buy> list = bll.GetModelList("UID=" + UID + " and ForumID =" + ForumID);
+
+            if (list.Count > 0) {
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list[0])));
+            }
+
+            if (u.TuiMao < f.TuiMao || f.TuiMao <= 0)
+            {
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", JsonConvert.SerializeObject("无法购买")));
+            }
+            else {
+                u.TuiMao = u.TuiMao - f.TuiMao;
+                tubll.Update(u); //扣除腿毛
+
+                #region ==== 作者 + 腿毛 ====
+                WebApi_Model.T_User zzmodel = tubll.GetModel((int)f.UID);
+                zzmodel.TuiMao += f.TuiMao;
+                tubll.Update(zzmodel);
+                #endregion
+
+                WebApi_Model.T_Forum_Buy model = new WebApi_Model.T_Forum_Buy();
+                model.BuyDate = DateTime.Now;
+                model.UID = UID;
+                model.ForumID = ForumID;
+                int key = bll.Add(model);
+                model.BuyID = key;
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult LikeForum() {
+            int ForumID = Convert.ToInt32(requestHelper.GetRequsetForm("ForumID", ""));
+            WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
+            WebApi_Model.T_Forums model = bll.GetModel(ForumID);
+            model.Likes += 1;
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.Update(model))));
+        }
+
+        [HttpPost]
+        public IHttpActionResult LikeComment() {
+            int CommentID = Convert.ToInt32(requestHelper.GetRequsetForm("CommentID", ""));
+            WebApi_BLL.T_Forum_Comment bll = new WebApi_BLL.T_Forum_Comment();
+            WebApi_Model.T_Forum_Comment model = bll.GetModel(CommentID);
+            model.Likes += 1;
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.Update(model))));
         }
     }
 }

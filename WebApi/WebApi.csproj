@@ -264,6 +264,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Trading\Models\" />
     <Folder Include="Areas\Trading\Views\Shared\" />
+    <Folder Include="Content\Activity\" />
     <Folder Include="Content\ICON\" />
     <Folder Include="Content\IndexSetting\" />
     <Folder Include="Content\Products\" />

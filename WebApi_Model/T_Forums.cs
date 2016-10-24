@@ -29,6 +29,14 @@ namespace WebApi_Model
 		private int? _likes;
 		private int? _commentcount;
         private List<T_Forum_Photo> _forum_Photo;
+        private List<T_Forum_Comment> _forum_Comment;
+        private T_User _user;
+        private List<T_Forum_Buy> _forum_Buy;
+
+        public T_User User {
+            set { _user = value; }
+            get { return _user; }
+        }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -170,6 +178,16 @@ namespace WebApi_Model
         {
             set { _forum_Photo = value; }
             get { return _forum_Photo; }
+        }
+
+        public List<T_Forum_Comment> Forum_Comment {
+            set { _forum_Comment = value; }
+            get { return _forum_Comment; }
+        }
+
+        public List<T_Forum_Buy> Forum_Buy {
+            set { _forum_Buy = value; }
+            get { return _forum_Buy; }
         }
 		#endregion Model
 
