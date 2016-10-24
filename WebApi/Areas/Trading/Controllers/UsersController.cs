@@ -250,5 +250,54 @@ namespace WebApi.Areas.Trading.Controllers
             }
         }
         #endregion
+
+        [HttpPost]
+        public IHttpActionResult AddFocus()
+        {
+            int UID = Convert.ToInt32(requestHelper.GetRequsetForm("UID", ""));
+            int FocusUID = Convert.ToInt32(requestHelper.GetRequsetForm("FocusUID", ""));
+
+            WebApi_BLL.T_User_Fans bll = new WebApi_BLL.T_User_Fans();
+
+
+            if (bll.GetModelList("MyUID = " + UID + " and FocusUID =" + FocusUID).Count == 0)
+            {
+                WebApi_Model.T_User_Fans model = new T_User_Fans();
+                model.MyUID = UID;
+                model.FocusUID = FocusUID;
+                bll.Add(model);
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject("关注成功")));
+            }
+            else
+            {
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", JsonConvert.SerializeObject("已关注该用户")));
+            }   
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetMyFocus(int UID)
+        {
+            WebApi_BLL.T_User_Fans tufbll = new WebApi_BLL.T_User_Fans();
+            WebApi_BLL.T_User_BaseInfo tubbll = new WebApi_BLL.T_User_BaseInfo();
+            List<WebApi_Model.T_User_Fans> list = new List<T_User_Fans>();
+            list = tufbll.GetModelList(" MyUID = " + UID);
+            foreach(WebApi_Model.T_User_Fans model in list){
+                model.User = tubbll.GetModel((int)model.FocusUID); 
+            }
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetWhoFocusMe(int UID) {
+            WebApi_BLL.T_User_Fans tufbll = new WebApi_BLL.T_User_Fans();
+            WebApi_BLL.T_User_BaseInfo tubbll = new WebApi_BLL.T_User_BaseInfo();
+            List<WebApi_Model.T_User_Fans> list = new List<T_User_Fans>();
+            list = tufbll.GetModelList(" FocusUID = " + UID);
+            foreach (WebApi_Model.T_User_Fans model in list)
+            {
+                model.User = tubbll.GetModel((int)model.MyUID);
+            }
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
+        }
     }
 }

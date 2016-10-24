@@ -30,10 +30,11 @@ namespace WebApi_Model
 		private int? _commentcount;
         private List<T_Forum_Photo> _forum_Photo;
         private List<T_Forum_Comment> _forum_Comment;
-        private T_User _user;
+        private T_User_BaseInfo _user;
         private List<T_Forum_Buy> _forum_Buy;
 
-        public T_User User {
+        public T_User_BaseInfo User
+        {
             set { _user = value; }
             get { return _user; }
         }

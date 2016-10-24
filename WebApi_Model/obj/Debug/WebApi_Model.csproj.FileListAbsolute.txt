@@ -40,3 +40,4 @@ C:\Work\臭皮匠\API\WebApi_Model\bin\Debug\zh-Hans\System.Net.Http.Formatting.
 C:\Work\臭皮匠\API\WebApi_Model\bin\Debug\zh-Hans\System.Web.Http.resources.dll
 C:\Work\臭皮匠\API\WebApi_Model\obj\Debug\WebApi_Model.dll
 C:\Work\臭皮匠\API\WebApi_Model\obj\Debug\WebApi_Model.pdb
+C:\Work\臭皮匠\API\WebApi_Model\obj\Debug\WebApi_Model.csprojResolveAssemblyReference.cache

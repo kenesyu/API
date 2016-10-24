@@ -141,6 +141,12 @@ namespace WebApi.Areas.Trading.Controllers
                     userbll.Update(receiptUser);
                     forumgift.PostTime = DateTime.Now;
                     bll.Add(forumgift);
+
+                    #region update giftcount
+                    //DBHelper.GetSingle("update T_Forum_Comment set ");
+                    #endregion
+
+
                     return Ok(ReturnJsonResult.GetJsonResult(1, "OK", "腿毛不足！"));
                 }
                 else
@@ -241,7 +247,7 @@ namespace WebApi.Areas.Trading.Controllers
             DataSet ds = bll.GetList(10, "Status =2 and Flag = 1", "ForumID desc");
             List<WebApi_Model.T_Forums> model = bll.DataTableToList(ds.Tables[0]);
             WebApi_BLL.T_Forum_Photo tfpbll = new WebApi_BLL.T_Forum_Photo();
-            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+            WebApi_BLL.T_User_BaseInfo tubll = new WebApi_BLL.T_User_BaseInfo();
 
             foreach (WebApi_Model.T_Forums m in model) {
                 m.Forum_Photo = tfpbll.GetModelList("ForumID = " + m.ForumID);
@@ -272,7 +278,7 @@ namespace WebApi.Areas.Trading.Controllers
             List<WebApi_Model.T_Forums> list = bll.DataTableToList(DBHelper.GetListByPage("T_Forums", Page, PageSize, strWhere, strOrder, out TotalPage).Tables[0]);
             
             WebApi_BLL.T_Forum_Photo tfpbll = new WebApi_BLL.T_Forum_Photo();
-            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+            WebApi_BLL.T_User_BaseInfo tubll = new WebApi_BLL.T_User_BaseInfo();
             foreach(WebApi_Model.T_Forums m in list){
                 m.Forum_Photo = tfpbll.GetModelList(" ForumID = " + m.ForumID);
                 m.User = tubll.GetModel((int)m.UID);
