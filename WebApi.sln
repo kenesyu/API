@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{39867B
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VIPUpdate", "VIPUpdate\VIPUpdate.csproj", "{F1357906-1687-4AA0-B88C-A9EBD77A75A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{0BE4CEC9-9444-466F-8CF2-F95649F604FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BE4CEC9-9444-466F-8CF2-F95649F604FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BE4CEC9-9444-466F-8CF2-F95649F604FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1357906-1687-4AA0-B88C-A9EBD77A75A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1357906-1687-4AA0-B88C-A9EBD77A75A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1357906-1687-4AA0-B88C-A9EBD77A75A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1357906-1687-4AA0-B88C-A9EBD77A75A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

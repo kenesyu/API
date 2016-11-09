@@ -15,6 +15,8 @@ namespace WebApi_Model
         private string _photo;
         private DateTime? _uploadtime;
         private int? _paytype;
+        private int? _height;
+        private int? _weight;
         /// <summary>
         /// 
         /// </summary>
@@ -54,6 +56,23 @@ namespace WebApi_Model
         {
             set { _paytype = value; }
             get { return _paytype; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? Height
+        {
+            set { _height = value; }
+            get { return _height; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? Weight
+        {
+            set { _weight = value; }
+            get { return _weight; }
         }
         #endregion Model
 

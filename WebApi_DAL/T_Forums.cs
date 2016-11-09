@@ -23,9 +23,9 @@ namespace WebApi_DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into T_Forums(");
-            strSql.Append("UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount)");
+            strSql.Append("UID,Title,FromIP,FromDevice,CategoryID,Content,ContentHeight,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount)");
             strSql.Append(" values (");
-            strSql.Append("@UID,@Title,@FromIP,@FromDevice,@CategoryID,@Content,@PostTime,@Status,@CoverPhoto,@TuiMao,@Flag,@ProductID,@Star,@Views,@Likes,@CommentCount)");
+            strSql.Append("@UID,@Title,@FromIP,@FromDevice,@CategoryID,@Content,@ContentHeight,@PostTime,@Status,@CoverPhoto,@TuiMao,@Flag,@ProductID,@Star,@Views,@Likes,@CommentCount)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@UID", SqlDbType.Int,4),
@@ -34,6 +34,7 @@ namespace WebApi_DAL
 					new SqlParameter("@FromDevice", SqlDbType.NVarChar,50),
 					new SqlParameter("@CategoryID", SqlDbType.Int,4),
 					new SqlParameter("@Content", SqlDbType.NVarChar,4000),
+					new SqlParameter("@ContentHeight", SqlDbType.Int,4),
 					new SqlParameter("@PostTime", SqlDbType.DateTime),
 					new SqlParameter("@Status", SqlDbType.Int,4),
 					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
@@ -50,16 +51,17 @@ namespace WebApi_DAL
             parameters[3].Value = model.FromDevice;
             parameters[4].Value = model.CategoryID;
             parameters[5].Value = model.Content;
-            parameters[6].Value = model.PostTime;
-            parameters[7].Value = model.Status;
-            parameters[8].Value = model.CoverPhoto;
-            parameters[9].Value = model.TuiMao;
-            parameters[10].Value = model.Flag;
-            parameters[11].Value = model.ProductID;
-            parameters[12].Value = model.Star;
-            parameters[13].Value = model.Views;
-            parameters[14].Value = model.Likes;
-            parameters[15].Value = model.CommentCount;
+            parameters[6].Value = model.ContentHeight;
+            parameters[7].Value = model.PostTime;
+            parameters[8].Value = model.Status;
+            parameters[9].Value = model.CoverPhoto;
+            parameters[10].Value = model.TuiMao;
+            parameters[11].Value = model.Flag;
+            parameters[12].Value = model.ProductID;
+            parameters[13].Value = model.Star;
+            parameters[14].Value = model.Views;
+            parameters[15].Value = model.Likes;
+            parameters[16].Value = model.CommentCount;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -94,6 +96,7 @@ namespace WebApi_DAL
             strSql.Append("FromDevice=@FromDevice,");
             strSql.Append("CategoryID=@CategoryID,");
             strSql.Append("Content=@Content,");
+            strSql.Append("ContentHeight=@ContentHeight,");
             strSql.Append("PostTime=@PostTime,");
             strSql.Append("Status=@Status,");
             strSql.Append("CoverPhoto=@CoverPhoto,");
@@ -112,6 +115,7 @@ namespace WebApi_DAL
 					new SqlParameter("@FromDevice", SqlDbType.NVarChar,50),
 					new SqlParameter("@CategoryID", SqlDbType.Int,4),
 					new SqlParameter("@Content", SqlDbType.NVarChar,4000),
+					new SqlParameter("@ContentHeight", SqlDbType.Int,4),
 					new SqlParameter("@PostTime", SqlDbType.DateTime),
 					new SqlParameter("@Status", SqlDbType.Int,4),
 					new SqlParameter("@CoverPhoto", SqlDbType.NVarChar,50),
@@ -129,17 +133,18 @@ namespace WebApi_DAL
             parameters[3].Value = model.FromDevice;
             parameters[4].Value = model.CategoryID;
             parameters[5].Value = model.Content;
-            parameters[6].Value = model.PostTime;
-            parameters[7].Value = model.Status;
-            parameters[8].Value = model.CoverPhoto;
-            parameters[9].Value = model.TuiMao;
-            parameters[10].Value = model.Flag;
-            parameters[11].Value = model.ProductID;
-            parameters[12].Value = model.Star;
-            parameters[13].Value = model.Views;
-            parameters[14].Value = model.Likes;
-            parameters[15].Value = model.CommentCount;
-            parameters[16].Value = model.ForumID;
+            parameters[6].Value = model.ContentHeight;
+            parameters[7].Value = model.PostTime;
+            parameters[8].Value = model.Status;
+            parameters[9].Value = model.CoverPhoto;
+            parameters[10].Value = model.TuiMao;
+            parameters[11].Value = model.Flag;
+            parameters[12].Value = model.ProductID;
+            parameters[13].Value = model.Star;
+            parameters[14].Value = model.Views;
+            parameters[15].Value = model.Likes;
+            parameters[16].Value = model.CommentCount;
+            parameters[17].Value = model.ForumID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -202,12 +207,13 @@ namespace WebApi_DAL
         public WebApi_Model.T_Forums GetModel(int ForumID)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount from T_Forums ");
+            strSql.Append("select  top 1 ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,ContentHeight,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount from T_Forums ");
             strSql.Append(" where ForumID=@ForumID");
             SqlParameter[] parameters = {
 					new SqlParameter("@ForumID", SqlDbType.Int,4)
 			};
             parameters[0].Value = ForumID;
+
 
             WebApi_Model.T_Forums model = new WebApi_Model.T_Forums();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
@@ -257,6 +263,10 @@ namespace WebApi_DAL
                 if (row["Content"] != null)
                 {
                     model.Content = row["Content"].ToString();
+                }
+                if (row["ContentHeight"] != null && row["ContentHeight"].ToString() != "")
+                {
+                    model.ContentHeight = int.Parse(row["ContentHeight"].ToString());
                 }
                 if (row["PostTime"] != null && row["PostTime"].ToString() != "")
                 {
@@ -308,7 +318,7 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount ");
+            strSql.Append("select ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,ContentHeight,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount ");
             strSql.Append(" FROM T_Forums ");
             if (strWhere.Trim() != "")
             {
@@ -328,7 +338,7 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount ");
+            strSql.Append(" ForumID,UID,Title,FromIP,FromDevice,CategoryID,Content,ContentHeight,PostTime,Status,CoverPhoto,TuiMao,Flag,ProductID,Star,Views,Likes,CommentCount ");
             strSql.Append(" FROM T_Forums ");
             if (strWhere.Trim() != "")
             {

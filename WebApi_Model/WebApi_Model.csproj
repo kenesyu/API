@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="T_System_Messages.cs" />
     <Compile Include="T_User_BaseInfo.cs" />
     <Compile Include="T_User_Fans.cs" />
     <Compile Include="T_Forum_Buy.cs" />

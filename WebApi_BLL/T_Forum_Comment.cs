@@ -46,8 +46,9 @@ namespace WebApi_BLL
         /// </summary>
         public WebApi_Model.T_Forum_Comment GetModel(int CommentID)
         {
-
-            return dal.GetModel(CommentID);
+            WebApi_Model.T_Forum_Comment model = dal.GetModel(CommentID);
+            //if()
+            return model;
         }
 
         /// <summary>
@@ -87,6 +88,8 @@ namespace WebApi_BLL
                     model = dal.DataRowToModel(dt.Rows[n]);
                     if (model != null)
                     {
+                        WebApi_BLL.T_User_BaseInfo tubll = new T_User_BaseInfo();
+                        model.UserBaseInfo = tubll.GetModel((int)model.UID);
                         modelList.Add(model);
                     }
                 }

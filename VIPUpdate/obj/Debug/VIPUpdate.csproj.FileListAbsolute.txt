@@ -1,0 +1,8 @@
+C:\Work\臭皮匠\API\VIPUpdate\bin\Debug\VIPUpdate.exe.config
+C:\Work\臭皮匠\API\VIPUpdate\bin\Debug\VIPUpdate.exe
+C:\Work\臭皮匠\API\VIPUpdate\bin\Debug\VIPUpdate.pdb
+C:\Work\臭皮匠\API\VIPUpdate\obj\Debug\VIPUpdate.csprojResolveAssemblyReference.cache
+C:\Work\臭皮匠\API\VIPUpdate\obj\Debug\VIPUpdate.exe
+C:\Work\臭皮匠\API\VIPUpdate\obj\Debug\VIPUpdate.pdb
+C:\Work\臭皮匠\API\VIPUpdate\bin\Debug\WebApi_DBUtility.dll
+C:\Work\臭皮匠\API\VIPUpdate\bin\Debug\WebApi_DBUtility.pdb

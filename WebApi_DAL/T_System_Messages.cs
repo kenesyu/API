@@ -7,11 +7,11 @@ using WebApi_DBUtility;
 namespace WebApi_DAL
 {
     /// <summary>
-    /// 数据访问类:T_Forum_Photo
+    /// 数据访问类:T_System_Messages
     /// </summary>
-    public partial class T_Forum_Photo
+    public partial class T_System_Messages
     {
-        public T_Forum_Photo()
+        public T_System_Messages()
         { }
         #region  BasicMethod
 
@@ -19,27 +19,29 @@ namespace WebApi_DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Forum_Photo model)
+        public int Add(WebApi_Model.T_System_Messages model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into T_Forum_Photo(");
-            strSql.Append("ForumID,Photo,UploadTime,PayType,Height,Weight)");
+            strSql.Append("insert into T_System_Messages(");
+            strSql.Append("MessageTitle,MessageContent,ToUID,LinkURL,IsView,PostDate,IsDelete)");
             strSql.Append(" values (");
-            strSql.Append("@ForumID,@Photo,@UploadTime,@PayType,@Height,@Weight)");
+            strSql.Append("@MessageTitle,@MessageContent,@ToUID,@LinkURL,@IsView,@PostDate,@IsDelete)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
-					new SqlParameter("@ForumID", SqlDbType.Int,4),
-					new SqlParameter("@Photo", SqlDbType.NVarChar,50),
-					new SqlParameter("@UploadTime", SqlDbType.DateTime),
-					new SqlParameter("@PayType", SqlDbType.Int,4),
-					new SqlParameter("@Height", SqlDbType.Int,4),
-					new SqlParameter("@Weight", SqlDbType.Int,4)};
-            parameters[0].Value = model.ForumID;
-            parameters[1].Value = model.Photo;
-            parameters[2].Value = model.UploadTime;
-            parameters[3].Value = model.PayType;
-            parameters[4].Value = model.Height;
-            parameters[5].Value = model.Weight;
+					new SqlParameter("@MessageTitle", SqlDbType.NVarChar,100),
+					new SqlParameter("@MessageContent", SqlDbType.NVarChar,500),
+					new SqlParameter("@ToUID", SqlDbType.Int,4),
+					new SqlParameter("@LinkURL", SqlDbType.NVarChar,150),
+					new SqlParameter("@IsView", SqlDbType.Int,4),
+					new SqlParameter("@PostDate", SqlDbType.DateTime),
+					new SqlParameter("@IsDelete", SqlDbType.Int,4)};
+            parameters[0].Value = model.MessageTitle;
+            parameters[1].Value = model.MessageContent;
+            parameters[2].Value = model.ToUID;
+            parameters[3].Value = model.LinkURL;
+            parameters[4].Value = model.IsView;
+            parameters[5].Value = model.PostDate;
+            parameters[6].Value = model.IsDelete;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
             if (obj == null)
@@ -54,32 +56,35 @@ namespace WebApi_DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Forum_Photo model)
+        public bool Update(WebApi_Model.T_System_Messages model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update T_Forum_Photo set ");
-            strSql.Append("ForumID=@ForumID,");
-            strSql.Append("Photo=@Photo,");
-            strSql.Append("UploadTime=@UploadTime,");
-            strSql.Append("PayType=@PayType,");
-            strSql.Append("Height=@Height,");
-            strSql.Append("Weight=@Weight");
-            strSql.Append(" where ForumPhotoID=@ForumPhotoID");
+            strSql.Append("update T_System_Messages set ");
+            strSql.Append("MessageTitle=@MessageTitle,");
+            strSql.Append("MessageContent=@MessageContent,");
+            strSql.Append("ToUID=@ToUID,");
+            strSql.Append("LinkURL=@LinkURL,");
+            strSql.Append("IsView=@IsView,");
+            strSql.Append("PostDate=@PostDate,");
+            strSql.Append("IsDelete=@IsDelete");
+            strSql.Append(" where MessageID=@MessageID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ForumID", SqlDbType.Int,4),
-					new SqlParameter("@Photo", SqlDbType.NVarChar,50),
-					new SqlParameter("@UploadTime", SqlDbType.DateTime),
-					new SqlParameter("@PayType", SqlDbType.Int,4),
-					new SqlParameter("@Height", SqlDbType.Int,4),
-					new SqlParameter("@Weight", SqlDbType.Int,4),
-					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)};
-            parameters[0].Value = model.ForumID;
-            parameters[1].Value = model.Photo;
-            parameters[2].Value = model.UploadTime;
-            parameters[3].Value = model.PayType;
-            parameters[4].Value = model.Height;
-            parameters[5].Value = model.Weight;
-            parameters[6].Value = model.ForumPhotoID;
+					new SqlParameter("@MessageTitle", SqlDbType.NVarChar,100),
+					new SqlParameter("@MessageContent", SqlDbType.NVarChar,500),
+					new SqlParameter("@ToUID", SqlDbType.Int,4),
+					new SqlParameter("@LinkURL", SqlDbType.NVarChar,150),
+					new SqlParameter("@IsView", SqlDbType.Int,4),
+					new SqlParameter("@PostDate", SqlDbType.DateTime),
+					new SqlParameter("@IsDelete", SqlDbType.Int,4),
+					new SqlParameter("@MessageID", SqlDbType.Int,4)};
+            parameters[0].Value = model.MessageTitle;
+            parameters[1].Value = model.MessageContent;
+            parameters[2].Value = model.ToUID;
+            parameters[3].Value = model.LinkURL;
+            parameters[4].Value = model.IsView;
+            parameters[5].Value = model.PostDate;
+            parameters[6].Value = model.IsDelete;
+            parameters[7].Value = model.MessageID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -95,16 +100,16 @@ namespace WebApi_DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ForumPhotoID)
+        public bool Delete(int MessageID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Forum_Photo ");
-            strSql.Append(" where ForumPhotoID=@ForumPhotoID");
+            strSql.Append("delete from T_System_Messages ");
+            strSql.Append(" where MessageID=@MessageID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)
+					new SqlParameter("@MessageID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ForumPhotoID;
+            parameters[0].Value = MessageID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -119,11 +124,11 @@ namespace WebApi_DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string ForumPhotoIDlist)
+        public bool DeleteList(string MessageIDlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from T_Forum_Photo ");
-            strSql.Append(" where ForumPhotoID in (" + ForumPhotoIDlist + ")  ");
+            strSql.Append("delete from T_System_Messages ");
+            strSql.Append(" where MessageID in (" + MessageIDlist + ")  ");
             int rows = DBHelper.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -139,18 +144,18 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Forum_Photo GetModel(int ForumPhotoID)
+        public WebApi_Model.T_System_Messages GetModel(int MessageID)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 ForumPhotoID,ForumID,Photo,UploadTime,PayType,Height,Weight from T_Forum_Photo ");
-            strSql.Append(" where ForumPhotoID=@ForumPhotoID");
+            strSql.Append("select  top 1 MessageID,MessageTitle,MessageContent,ToUID,LinkURL,IsView,PostDate,IsDelete from T_System_Messages ");
+            strSql.Append(" where MessageID=@MessageID");
             SqlParameter[] parameters = {
-					new SqlParameter("@ForumPhotoID", SqlDbType.Int,4)
+					new SqlParameter("@MessageID", SqlDbType.Int,4)
 			};
-            parameters[0].Value = ForumPhotoID;
+            parameters[0].Value = MessageID;
 
-            WebApi_Model.T_Forum_Photo model = new WebApi_Model.T_Forum_Photo();
+            WebApi_Model.T_System_Messages model = new WebApi_Model.T_System_Messages();
             DataSet ds = DBHelper.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -166,38 +171,42 @@ namespace WebApi_DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Forum_Photo DataRowToModel(DataRow row)
+        public WebApi_Model.T_System_Messages DataRowToModel(DataRow row)
         {
-            WebApi_Model.T_Forum_Photo model = new WebApi_Model.T_Forum_Photo();
+            WebApi_Model.T_System_Messages model = new WebApi_Model.T_System_Messages();
             if (row != null)
             {
-                if (row["ForumPhotoID"] != null && row["ForumPhotoID"].ToString() != "")
+                if (row["MessageID"] != null && row["MessageID"].ToString() != "")
                 {
-                    model.ForumPhotoID = int.Parse(row["ForumPhotoID"].ToString());
+                    model.MessageID = int.Parse(row["MessageID"].ToString());
                 }
-                if (row["ForumID"] != null && row["ForumID"].ToString() != "")
+                if (row["MessageTitle"] != null)
                 {
-                    model.ForumID = int.Parse(row["ForumID"].ToString());
+                    model.MessageTitle = row["MessageTitle"].ToString();
                 }
-                if (row["Photo"] != null)
+                if (row["MessageContent"] != null)
                 {
-                    model.Photo = row["Photo"].ToString();
+                    model.MessageContent = row["MessageContent"].ToString();
                 }
-                if (row["UploadTime"] != null && row["UploadTime"].ToString() != "")
+                if (row["ToUID"] != null && row["ToUID"].ToString() != "")
                 {
-                    model.UploadTime = DateTime.Parse(row["UploadTime"].ToString());
+                    model.ToUID = int.Parse(row["ToUID"].ToString());
                 }
-                if (row["PayType"] != null && row["PayType"].ToString() != "")
+                if (row["LinkURL"] != null)
                 {
-                    model.PayType = int.Parse(row["PayType"].ToString());
+                    model.LinkURL = row["LinkURL"].ToString();
                 }
-                if (row["Height"] != null && row["Height"].ToString() != "")
+                if (row["IsView"] != null && row["IsView"].ToString() != "")
                 {
-                    model.Height = int.Parse(row["Height"].ToString());
+                    model.IsView = int.Parse(row["IsView"].ToString());
                 }
-                if (row["Weight"] != null && row["Weight"].ToString() != "")
+                if (row["PostDate"] != null && row["PostDate"].ToString() != "")
                 {
-                    model.Weight = int.Parse(row["Weight"].ToString());
+                    model.PostDate = DateTime.Parse(row["PostDate"].ToString());
+                }
+                if (row["IsDelete"] != null && row["IsDelete"].ToString() != "")
+                {
+                    model.IsDelete = int.Parse(row["IsDelete"].ToString());
                 }
             }
             return model;
@@ -209,12 +218,13 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select ForumPhotoID,ForumID,Photo,UploadTime,PayType,Height,Weight ");
-            strSql.Append(" FROM T_Forum_Photo ");
+            strSql.Append("select MessageID,MessageTitle,MessageContent,ToUID,LinkURL,IsView,PostDate,IsDelete ");
+            strSql.Append(" FROM T_System_Messages ");
             if (strWhere.Trim() != "")
             {
-                strSql.Append(" where " + strWhere);
+                strSql.Append(" where " + strWhere + " order by PostDate desc");
             }
+            
             return DBHelper.Query(strSql.ToString());
         }
 
@@ -229,8 +239,8 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" ForumPhotoID,ForumID,Photo,UploadTime,PayType,Height,Weight ");
-            strSql.Append(" FROM T_Forum_Photo ");
+            strSql.Append(" MessageID,MessageTitle,MessageContent,ToUID,LinkURL,IsView,PostDate,IsDelete ");
+            strSql.Append(" FROM T_System_Messages ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -245,7 +255,7 @@ namespace WebApi_DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM T_Forum_Photo ");
+            strSql.Append("select count(1) FROM T_System_Messages ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -274,9 +284,9 @@ namespace WebApi_DAL
             }
             else
             {
-                strSql.Append("order by T.ForumPhotoID desc");
+                strSql.Append("order by T.MessageID desc");
             }
-            strSql.Append(")AS Row, T.*  from T_Forum_Photo T ");
+            strSql.Append(")AS Row, T.*  from T_System_Messages T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -301,8 +311,8 @@ namespace WebApi_DAL
                     new SqlParameter("@OrderType", SqlDbType.Bit),
                     new SqlParameter("@strWhere", SqlDbType.VarChar,1000),
                     };
-            parameters[0].Value = "T_Forum_Photo";
-            parameters[1].Value = "ForumPhotoID";
+            parameters[0].Value = "T_System_Messages";
+            parameters[1].Value = "MessageID";
             parameters[2].Value = PageSize;
             parameters[3].Value = PageIndex;
             parameters[4].Value = 0;

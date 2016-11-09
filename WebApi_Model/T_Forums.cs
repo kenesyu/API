@@ -18,6 +18,7 @@ namespace WebApi_Model
 		private string _fromdevice;
 		private int? _categoryid;
 		private string _content;
+        private int? _contentheight;
 		private DateTime? _posttime;
 		private int? _status;
 		private string _coverphoto;
@@ -33,7 +34,7 @@ namespace WebApi_Model
         private T_User_BaseInfo _user;
         private List<T_Forum_Buy> _forum_Buy;
 
-        public T_User_BaseInfo User
+        public T_User_BaseInfo UserBaseInfo
         {
             set { _user = value; }
             get { return _user; }
@@ -94,6 +95,15 @@ namespace WebApi_Model
 			set{ _content=value;}
 			get{return _content;}
 		}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? ContentHeight
+        {
+            set { _contentheight = value; }
+            get { return _contentheight; }
+        }
 		/// <summary>
 		/// 发表日期
 		/// </summary>

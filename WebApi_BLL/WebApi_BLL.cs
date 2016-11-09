@@ -6,19 +6,19 @@ using WebApi_Model;
 namespace WebApi_BLL
 {
     /// <summary>
-    /// 用户评贴
+    /// 系统消息
     /// </summary>
-    public partial class T_Forums
+    public partial class T_System_Messages
     {
-        private readonly WebApi_DAL.T_Forums dal = new WebApi_DAL.T_Forums();
-        public T_Forums()
+        private readonly WebApi_DAL.T_System_Messages dal = new WebApi_DAL.T_System_Messages();
+        public T_System_Messages()
         { }
         #region  BasicMethod
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public int Add(WebApi_Model.T_Forums model)
+        public int Add(WebApi_Model.T_System_Messages model)
         {
             return dal.Add(model);
         }
@@ -26,7 +26,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(WebApi_Model.T_Forums model)
+        public bool Update(WebApi_Model.T_System_Messages model)
         {
             return dal.Update(model);
         }
@@ -34,21 +34,22 @@ namespace WebApi_BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int ForumID)
+        public bool Delete(int MessageID)
         {
 
-            return dal.Delete(ForumID);
+            return dal.Delete(MessageID);
         }
+      
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public WebApi_Model.T_Forums GetModel(int ForumID)
+        public WebApi_Model.T_System_Messages GetModel(int MessageID)
         {
-            WebApi_Model.T_Forums model = dal.GetModel(ForumID);
-            return model;
-        }
 
+            return dal.GetModel(MessageID);
+        }
+     
         /// <summary>
         /// 获得数据列表
         /// </summary>
@@ -66,7 +67,7 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Forums> GetModelList(string strWhere)
+        public List<WebApi_Model.T_System_Messages> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -74,13 +75,13 @@ namespace WebApi_BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<WebApi_Model.T_Forums> DataTableToList(DataTable dt)
+        public List<WebApi_Model.T_System_Messages> DataTableToList(DataTable dt)
         {
-            List<WebApi_Model.T_Forums> modelList = new List<WebApi_Model.T_Forums>();
+            List<WebApi_Model.T_System_Messages> modelList = new List<WebApi_Model.T_System_Messages>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                WebApi_Model.T_Forums model;
+                WebApi_Model.T_System_Messages model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);

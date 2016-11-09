@@ -49,9 +49,12 @@ namespace WebApi.Areas.Trading.Controllers
         {
             try
             {
+                int Height = Convert.ToInt32(requestHelper.GetRequsetForm("Height", ""));
+                int Weight = Convert.ToInt32(requestHelper.GetRequsetForm("Weight", ""));
                 WebApi_BLL.T_Forum_Photo bll = new WebApi_BLL.T_Forum_Photo();
                 string Path = HttpContext.Current.Server.MapPath("/Content/User_Photo/");
                 HttpPostedFile file = HttpContext.Current.Request.Files[0];
+                //if(file.ContentLength >)
                 string fileExtName = file.FileName.Substring(file.FileName.LastIndexOf("."));
                 string newName = Guid.NewGuid().ToString() + fileExtName;
                 string savePath = Path + newName;
@@ -59,9 +62,42 @@ namespace WebApi.Areas.Trading.Controllers
                 WebApi_Model.T_Forum_Photo model = new WebApi_Model.T_Forum_Photo();
                 model.Photo = newName;
                 model.UploadTime = DateTime.Now;
+                model.Height = Height;
+                model.Weight = Weight;
                 int key = bll.Add(model);
                 model.ForumPhotoID = key;
                 return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
+
+            }
+            catch (SystemException ex)
+            {
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", ex.Message));
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult TestUploadCostPhoto()
+        {
+            try
+            {
+                int Height = Convert.ToInt32(requestHelper.GetRequsetForm("Height", ""));
+                int Weight = Convert.ToInt32(requestHelper.GetRequsetForm("Weight", ""));
+                WebApi_BLL.T_Forum_Photo bll = new WebApi_BLL.T_Forum_Photo();
+                string Path = HttpContext.Current.Server.MapPath("/Content/User_Photo/");
+                //HttpPostedFile file = HttpContext.Current.Request.Files[0];
+                //if(file.ContentLength >)
+                //string fileExtName = file.FileName.Substring(file.FileName.LastIndexOf("."));
+                //string newName = Guid.NewGuid().ToString() + fileExtName;
+                //string savePath = Path + newName;
+                //file.SaveAs(savePath);
+                //WebApi_Model.T_Forum_Photo model = new WebApi_Model.T_Forum_Photo();
+                //model.Photo = newName;
+                //model.UploadTime = DateTime.Now;
+                //model.Height = Height;
+                //model.Weight = Weight;
+                //int key = bll.Add(model);
+                //model.ForumPhotoID = key;
+                return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject("Weight:" + Weight + " Height:" + Height + " Length:" )));
 
             }
             catch (SystemException ex)
@@ -143,7 +179,7 @@ namespace WebApi.Areas.Trading.Controllers
                     bll.Add(forumgift);
 
                     #region update giftcount
-                    //DBHelper.GetSingle("update T_Forum_Comment set ");
+                    DBHelper.GetSingle("update T_Forum_Comment set giftcount = (select giftcount from V_Forum_Gift where ForumID = " + forumgift.ForumID + " and PostUID = " + forumgift.PostUID + ")");
                     #endregion
 
 
@@ -251,7 +287,7 @@ namespace WebApi.Areas.Trading.Controllers
 
             foreach (WebApi_Model.T_Forums m in model) {
                 m.Forum_Photo = tfpbll.GetModelList("ForumID = " + m.ForumID);
-                m.User = tubll.GetModel((int)m.UID);
+                m.UserBaseInfo = tubll.GetModel((int)m.UID);
             }
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(model)));
         }
@@ -281,7 +317,7 @@ namespace WebApi.Areas.Trading.Controllers
             WebApi_BLL.T_User_BaseInfo tubll = new WebApi_BLL.T_User_BaseInfo();
             foreach(WebApi_Model.T_Forums m in list){
                 m.Forum_Photo = tfpbll.GetModelList(" ForumID = " + m.ForumID);
-                m.User = tubll.GetModel((int)m.UID);
+                m.UserBaseInfo = tubll.GetModel((int)m.UID);
             }
             if (list != null)
             {
@@ -308,6 +344,10 @@ namespace WebApi.Areas.Trading.Controllers
             forum.CommentCount += 1;
             tfsbll.Update(forum);
 
+            #region update giftcount
+            DBHelper.GetSingle("update T_Forum_Comment set giftcount = (select giftcount from V_Forum_Gift where ForumID = " + comment.ForumID + " and PostUID = " + comment.UID + ")");
+            #endregion
+
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(comment)));
         }
 
@@ -315,13 +355,17 @@ namespace WebApi.Areas.Trading.Controllers
         public IHttpActionResult ViewForum(int ForumID, int UID)
         {
             WebApi_BLL.T_Forums bll = new WebApi_BLL.T_Forums();
-            WebApi_BLL.T_User tubll = new WebApi_BLL.T_User();
+            //WebApi_BLL.T_User_BaseInfo tubll = new WebApi_BLL.T_User_BaseInfo();
             WebApi_BLL.T_Forum_Photo tfpbll = new WebApi_BLL.T_Forum_Photo();
             WebApi_BLL.T_Forum_Comment tfcbll = new WebApi_BLL.T_Forum_Comment();
             WebApi_BLL.T_Forum_Buy tfbbll = new WebApi_BLL.T_Forum_Buy();
-
+            WebApi_BLL.T_User_BaseInfo tubll = new WebApi_BLL.T_User_BaseInfo();
+            
             WebApi_Model.T_Forums forumModle = bll.GetModel(ForumID);
-            WebApi_Model.T_User userModel = tubll.GetModel(UID);
+
+            forumModle.UserBaseInfo = tubll.GetModel((int)forumModle.UID);
+            //WebApi_Model.T_User_BaseInfo userModel = tubll.GetModel(UID);
+            //forumModle.User = userModel;
             forumModle.Views += 1; //查看数+1
             bll.Update(forumModle);
             forumModle.Forum_Photo = tfpbll.GetModelList("ForumID =" + ForumID);

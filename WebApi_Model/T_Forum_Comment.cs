@@ -19,6 +19,12 @@ namespace WebApi_Model
         private int? _forumid;
         private int? _cid;
         private int? _status;
+        private T_User_BaseInfo _userBaseInfo;
+
+        public T_User_BaseInfo UserBaseInfo {
+            set { _userBaseInfo = value; }
+            get { return _userBaseInfo; }
+        }
         /// <summary>
         /// 
         /// </summary>
