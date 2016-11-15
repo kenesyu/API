@@ -117,9 +117,21 @@ namespace WebApi.Areas.Trading.Controllers
             {
                 return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", "没有商品"));
             }
+            else
+            {
+                decimal TotalAmount = 0;
+                WebApi_BLL.T_Product_Ext tpebll = new WebApi_BLL.T_Product_Ext();
+                for (int i = 0; i < Order.OrderDetails.Count; i++)
+                {
+                    WebApi_Model.T_Product_Ext ext = tpebll.GetModel((int)Order.OrderDetails[i].ProductExtID);
+                    TotalAmount += (decimal)(Order.OrderDetails[i].Qty * ext.Price);
+                }
+                Order.TotalAmount = TotalAmount;
+            }
 
             Order.OrderNum = dtNow.Ticks.ToString();
             Order.OrderDateTime = dtNow;
+            Order.Status = 0;
             WebApi_BLL.T_Product_Orders OrderBll = new WebApi_BLL.T_Product_Orders();
             int id = OrderBll.Add(Order);
 
@@ -178,6 +190,32 @@ namespace WebApi.Areas.Trading.Controllers
             List<T_User_ShopCar> shopCarList = shopCar_bll.GetModelList("UID = " + UID);
 
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(shopCarList)));
+        }
+
+        [HttpPost]
+        public IHttpActionResult CleanShopCar()
+        {
+            int UID = int.Parse(requestHelper.GetRequsetForm("UID",""));
+            WebApi_BLL.T_User_ShopCar shopCar_bll = new WebApi_BLL.T_User_ShopCar();
+            
+            List<T_User_ShopCar> shopCarList = shopCar_bll.GetModelList("UID = " + UID);
+            for (int i = 0; i < shopCarList.Count; i++)
+            {
+                shopCar_bll.Delete(shopCarList[i].ShopCarID);
+            }
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(shopCarList)));
+        }
+
+        [HttpPost]
+        public IHttpActionResult DeleteShopCar()
+        {
+            //int UID = int.Parse(requestHelper.GetRequsetForm("UID", ""));
+            string ShopCarID = requestHelper.GetRequsetForm("ShopCarID", "");
+            WebApi_BLL.T_User_ShopCar shopCar_bll = new WebApi_BLL.T_User_ShopCar();
+            //shopCar_bll.Delete(ShopCarID);
+            //List<T_User_ShopCar> shopCarList = shopCar_bll.GetModelList("UID = " + UID);
+            DBHelper.ExecuteSql("delete FROM T_User_ShopCar where ShopCarID in (" + ShopCarID + ")");
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
         }
 
         #endregion

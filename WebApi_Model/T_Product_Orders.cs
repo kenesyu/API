@@ -25,7 +25,18 @@ namespace WebApi_Model
 		private DateTime? _aftersaletime;
 		private string _trancode;
 		private string _trantype;
+        private string _paymethod;
         private List<T_Product_OrderDetails> _orderDetails;
+
+
+        /// <summary>
+        /// 付款方式
+        /// </summary>
+        public string PayMethod
+        {
+            set { _paymethod = value; }
+            get { return _paymethod; }
+        }
 		/// <summary>
 		/// 
 		/// </summary>

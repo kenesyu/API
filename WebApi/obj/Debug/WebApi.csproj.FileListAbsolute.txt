@@ -276,3 +276,5 @@ C:\Work\臭皮匠\API\WebApi\obj\Debug\WebApi.dll
 C:\Work\臭皮匠\API\WebApi\obj\Debug\WebApi.pdb
 C:\Work\臭皮匠\API\WebApi\bin\WebApi.dll
 C:\Work\臭皮匠\API\WebApi\bin\WebApi.pdb
+C:\Work\臭皮匠\API\WebApi\bin\AopSdk.dll
+C:\Work\臭皮匠\API\WebApi\bin\AopSdk.pdb

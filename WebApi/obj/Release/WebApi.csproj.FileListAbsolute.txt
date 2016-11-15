@@ -168,3 +168,5 @@ C:\Work\臭皮匠\API\WebApi\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
 C:\Work\臭皮匠\API\WebApi\obj\Release\WebApi.csprojResolveAssemblyReference.cache
 C:\Work\臭皮匠\API\WebApi\obj\Release\WebApi.dll
 C:\Work\臭皮匠\API\WebApi\obj\Release\WebApi.pdb
+C:\Work\臭皮匠\API\WebApi\bin\AopSdk.dll
+C:\Work\臭皮匠\API\WebApi\bin\AopSdk.pdb

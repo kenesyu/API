@@ -140,6 +140,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Trading\Controllers\ForumsController.cs" />
     <Compile Include="Areas\Trading\Controllers\IndexSettingController.cs" />
+    <Compile Include="Areas\Trading\Controllers\PayController.cs" />
     <Compile Include="Areas\Trading\Controllers\PhotoCollectionController.cs" />
     <Compile Include="Areas\Trading\Controllers\ProductsController.cs" />
     <Compile Include="Areas\Trading\Controllers\RechargeTypeController.cs" />
@@ -214,6 +215,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\Trading\Views\Web.config" />
+    <Content Include="Content\Key\rsa_private_key.pem" />
     <None Include="Properties\PublishProfiles\Publish.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -277,6 +279,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\迅雷下载\Alipay-sdk-NET %282%29\alipay-sdk-NET-20160628211022\AopSdk.csproj">
+      <Project>{9c11cae5-5188-4e71-825b-68fc3135728a}</Project>
+      <Name>AopSdk</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebApi_BLL\WebApi_BLL.csproj">
       <Project>{8248dfa0-763e-49cf-b062-b315a81dd3de}</Project>
       <Name>WebApi_BLL</Name>
