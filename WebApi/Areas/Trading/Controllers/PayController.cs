@@ -36,7 +36,7 @@ namespace WebApi.Areas.Trading.Controllers
             {
                 Dictionary<string,string> parameters = new Dictionary<string,string>();
                 parameters.Add("app_id", ConfigurationManager.AppSettings["app_id"].ToString());
-                parameters.Add("biz_content", "{\"timeout_express\":\"30m\",\"seller_id\":\"" + ConfigurationManager.AppSettings["seller_id"].ToString() + "\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"" + order.TotalAmount + "\",\"subject\":\"商品支付" + order.OrderID + "\",\"body\":\"我是测试数据\",\"out_trade_no\":\"" + order.OrderNum + "\"}");
+                parameters.Add("biz_content", "{\"timeout_express\":\"30m\",\"seller_id\":\"" + ConfigurationManager.AppSettings["seller_id"].ToString() + "\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"" + order.TotalAmount + "\",\"subject\":\"商品支付" + order.OrderID + "\",\"body\":\"支付\",\"out_trade_no\":\"" + order.OrderNum + "\"}");
                 parameters.Add("charset","utf-8");
                 parameters.Add("format","json");
                 parameters.Add("method","alipay.trade.app.pay");

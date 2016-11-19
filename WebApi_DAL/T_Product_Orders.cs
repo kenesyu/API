@@ -24,9 +24,9 @@ namespace WebApi_DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into T_Product_Orders(");
-            strSql.Append("OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod)");
+            strSql.Append("OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod,Out_Trade_No)");
             strSql.Append(" values (");
-            strSql.Append("@OrderNum,@OrderDateTime,@UID,@Status,@AddressID,@ProductQty,@TotalAmount,@PayTime,@SendTime,@TakeTime,@AfterSaleTime,@TranCode,@TranType,@PayMethod)");
+            strSql.Append("@OrderNum,@OrderDateTime,@UID,@Status,@AddressID,@ProductQty,@TotalAmount,@PayTime,@SendTime,@TakeTime,@AfterSaleTime,@TranCode,@TranType,@PayMethod,@Out_Trade_No)");
             strSql.Append(";select @@IDENTITY");
             SqlParameter[] parameters = {
 					new SqlParameter("@OrderNum", SqlDbType.NVarChar,16),
@@ -42,7 +42,8 @@ namespace WebApi_DAL
 					new SqlParameter("@AfterSaleTime", SqlDbType.DateTime),
 					new SqlParameter("@TranCode", SqlDbType.NVarChar,25),
 					new SqlParameter("@TranType", SqlDbType.NVarChar,25),
-					new SqlParameter("@PayMethod", SqlDbType.NVarChar,50)};
+					new SqlParameter("@PayMethod", SqlDbType.NVarChar,50),
+					new SqlParameter("@Out_Trade_No", SqlDbType.NVarChar,50)};
             parameters[0].Value = model.OrderNum;
             parameters[1].Value = model.OrderDateTime;
             parameters[2].Value = model.UID;
@@ -57,15 +58,14 @@ namespace WebApi_DAL
             parameters[11].Value = model.TranCode;
             parameters[12].Value = model.TranType;
             parameters[13].Value = model.PayMethod;
+            parameters[14].Value = model.Out_Trade_No;
 
             object obj = DBHelper.GetSingle(strSql.ToString(), parameters);
-            //DBHelper.ExecuteSqlTran(
-
             if (obj == null)
             {
                 return 0;
             }
-            else
+                else
             {
                 WebApi_DAL.T_Product_OrderDetails dal = new T_Product_OrderDetails();
                 List<int> list = new List<int>();
@@ -111,7 +111,8 @@ namespace WebApi_DAL
             strSql.Append("AfterSaleTime=@AfterSaleTime,");
             strSql.Append("TranCode=@TranCode,");
             strSql.Append("TranType=@TranType,");
-            strSql.Append("PayMethod=@PayMethod");
+            strSql.Append("PayMethod=@PayMethod,");
+            strSql.Append("Out_Trade_No=@Out_Trade_No");
             strSql.Append(" where OrderID=@OrderID");
             SqlParameter[] parameters = {
 					new SqlParameter("@OrderNum", SqlDbType.NVarChar,16),
@@ -128,6 +129,7 @@ namespace WebApi_DAL
 					new SqlParameter("@TranCode", SqlDbType.NVarChar,25),
 					new SqlParameter("@TranType", SqlDbType.NVarChar,25),
 					new SqlParameter("@PayMethod", SqlDbType.NVarChar,50),
+					new SqlParameter("@Out_Trade_No", SqlDbType.NVarChar,50),
 					new SqlParameter("@OrderID", SqlDbType.Int,4)};
             parameters[0].Value = model.OrderNum;
             parameters[1].Value = model.OrderDateTime;
@@ -143,7 +145,8 @@ namespace WebApi_DAL
             parameters[11].Value = model.TranCode;
             parameters[12].Value = model.TranType;
             parameters[13].Value = model.PayMethod;
-            parameters[14].Value = model.OrderID;
+            parameters[14].Value = model.Out_Trade_No;
+            parameters[15].Value = model.OrderID;
 
             int rows = DBHelper.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -207,7 +210,7 @@ namespace WebApi_DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  top 1 OrderID,OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod from T_Product_Orders ");
+            strSql.Append("select  top 1 OrderID,OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod,Out_Trade_No from T_Product_Orders ");
             strSql.Append(" where OrderID=@OrderID");
             SqlParameter[] parameters = {
 					new SqlParameter("@OrderID", SqlDbType.Int,4)
@@ -295,6 +298,10 @@ namespace WebApi_DAL
                 {
                     model.PayMethod = row["PayMethod"].ToString();
                 }
+                if (row["Out_Trade_No"] != null)
+                {
+                    model.Out_Trade_No = row["Out_Trade_No"].ToString();
+                }
             }
             return model;
         }
@@ -305,7 +312,7 @@ namespace WebApi_DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select OrderID,OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod ");
+            strSql.Append("select OrderID,OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod,Out_Trade_No ");
             strSql.Append(" FROM T_Product_Orders ");
             if (strWhere.Trim() != "")
             {
@@ -325,7 +332,7 @@ namespace WebApi_DAL
             {
                 strSql.Append(" top " + Top.ToString());
             }
-            strSql.Append(" OrderID,OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod ");
+            strSql.Append(" OrderID,OrderNum,OrderDateTime,UID,Status,AddressID,ProductQty,TotalAmount,PayTime,SendTime,TakeTime,AfterSaleTime,TranCode,TranType,PayMethod,Out_Trade_No ");
             strSql.Append(" FROM T_Product_Orders ");
             if (strWhere.Trim() != "")
             {

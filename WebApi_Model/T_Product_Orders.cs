@@ -26,8 +26,18 @@ namespace WebApi_Model
 		private string _trancode;
 		private string _trantype;
         private string _paymethod;
+        private string _out_Trade_No;
         private List<T_Product_OrderDetails> _orderDetails;
 
+
+        /// <summary>
+        /// 外部交易号
+        /// </summary>
+        public string Out_Trade_No
+        {
+            set { _out_Trade_No = value; }
+            get { return _out_Trade_No; }
+        }
 
         /// <summary>
         /// 付款方式

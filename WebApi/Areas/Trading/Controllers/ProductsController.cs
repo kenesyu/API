@@ -108,6 +108,7 @@ namespace WebApi.Areas.Trading.Controllers
         [HttpPost]
         public IHttpActionResult CreateOrder(dynamic model)
         {
+            //string testjson = "{\n  \"UID\" : 10,\n  \"OrderDetails\" : [\n    {\n      \"ProductID\" : 3,\n      \"ProductExtID\" : 2,\n      \"Qty\" : \"1\"\n    }\n  ],\n  \"AddressID\" : 7,\n  \"ProductQty\" : 1\n}";
 
             T_Product_Orders Order = (T_Product_Orders)Newtonsoft.Json.JsonConvert.DeserializeObject(model, typeof(T_Product_Orders));
 
@@ -216,6 +217,49 @@ namespace WebApi.Areas.Trading.Controllers
             //List<T_User_ShopCar> shopCarList = shopCar_bll.GetModelList("UID = " + UID);
             DBHelper.ExecuteSql("delete FROM T_User_ShopCar where ShopCarID in (" + ShopCarID + ")");
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
+        }
+
+        [HttpPost]
+        public IHttpActionResult CheckOrder()
+        {
+            string msg = requestHelper.GetRequsetForm("msg", "");
+            string timestamp = requestHelper.GetRequsetForm("timestamp", "");
+            string total_amount = requestHelper.GetRequsetForm("total_amount", "");
+            string trade_no = requestHelper.GetRequsetForm("trade_no", "");
+            string out_trade_no = requestHelper.GetRequsetForm("out_trade_no", "");
+            string resultStatus = requestHelper.GetRequsetForm("resultStatus", "");
+
+            WebApi_BLL.T_Product_Orders OrderBll = new WebApi_BLL.T_Product_Orders();
+
+            List<WebApi_Model.T_Product_Orders> orders = OrderBll.GetModelList("OrderNum='" + out_trade_no + "'");
+
+            if (orders.Count == 1)
+            {
+                if (msg == "Success" && resultStatus == "9000")
+                {
+                    if (Convert.ToDecimal(total_amount) != orders[0].TotalAmount)
+                    {
+                        return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", "支付金额与订单金额不同"));
+                    }
+                    else
+                    {
+                        orders[0].Out_Trade_No = trade_no;  //支付宝订单号
+                        orders[0].Status = 1;
+                        orders[0].PayTime = DateTime.Now;
+                        orders[0].PayMethod = "AliPay";
+                        OrderBll.Update(orders[0]);
+                    }
+                }
+                else
+                {
+                    return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", "返回Msg非Success或Code非9000"));
+                }
+            }
+            else
+            {
+                return Ok(ReturnJsonResult.GetJsonResult(-1, "Error", "无法找到订单或订单异常"));
+            }
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(orders[0])));
         }
 
         #endregion

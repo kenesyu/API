@@ -79,7 +79,17 @@ namespace WebApi.Areas.Trading.Controllers
             {
                 return Ok(ReturnJsonResult.GetJsonResult(-1, ex.Message.ToString(), false));
             }
-        } 
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAddressByID(int AddressID) {
+            //string strWhere = " UID = '" + UID + "'";
+            //List<T_UserAddress> list = bll.GetModelList(strWhere);
+            //int AddressID = int.Parse(requestHelper.GetRequsetForm("AddressID", ""));
+            //bool falg = bll.Delete(AddressID);
+            T_UserAddress Address = bll.GetModel(AddressID);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(Address)));
+        }
 
     }
 }

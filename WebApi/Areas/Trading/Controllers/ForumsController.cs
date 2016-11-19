@@ -440,5 +440,43 @@ namespace WebApi.Areas.Trading.Controllers
             model.Likes += 1;
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(bll.Update(model))));
         }
+
+        [HttpPost]
+        public IHttpActionResult AddStore()
+        {
+            int UID = int.Parse(requestHelper.GetRequsetForm("UID", ""));
+            int ForumID = int.Parse(requestHelper.GetRequsetForm("ForumID", ""));
+
+            WebApi_BLL.T_Forum_Store bll = new WebApi_BLL.T_Forum_Store();
+
+            List<WebApi_Model.T_Forum_Store> list = bll.GetModelList("UID=" + UID + " and ForumID=" + ForumID);
+            if (list == null || list.Count == 0)
+            {
+                WebApi_Model.T_Forum_Store model = new WebApi_Model.T_Forum_Store();
+                model.UID = UID;
+                model.ForumID = ForumID;
+                bll.Add(model);
+            }
+
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
+        }
+
+        [HttpPost]
+        public IHttpActionResult DeleteStore()
+        {
+            int ID = int.Parse(requestHelper.GetRequsetForm("ID", ""));
+            WebApi_BLL.T_Forum_Store bll = new WebApi_BLL.T_Forum_Store();
+            bll.Delete(ID);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetStoreList(int UID)
+        {
+            //int UID = int.Parse(requestHelper.GetRequsetForm("UID", ""));
+            WebApi_BLL.T_Forum_Store bll = new WebApi_BLL.T_Forum_Store();
+            List<WebApi_Model.T_Forum_Store> list = bll.GetModelList("UID=" + UID);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
+        }
     }
 }
