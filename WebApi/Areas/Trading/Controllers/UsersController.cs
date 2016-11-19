@@ -305,5 +305,20 @@ namespace WebApi.Areas.Trading.Controllers
             }
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
         }
+
+        [HttpPost]
+        public IHttpActionResult CancelFocus()
+        {
+            int UID = Convert.ToInt32(requestHelper.GetRequsetForm("UID", ""));
+            int FocusUID = Convert.ToInt32(requestHelper.GetRequsetForm("FocusUID", ""));
+            WebApi_BLL.T_User_Fans bll = new WebApi_BLL.T_User_Fans();
+
+            List<T_User_Fans> list = bll.GetModelList("MyUID=" + UID + " and FocusUID=" + FocusUID);
+            for (int i = 0; i < list.Count; i++)
+            {
+                bll.Delete(list[i].ID);
+            }
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject("取消关注")));
+        }
     }
 }
