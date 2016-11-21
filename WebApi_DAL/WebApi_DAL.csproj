@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="T_Forum_Likes.cs" />
+    <Compile Include="T_Apple_Pay.cs" />
     <Compile Include="T_Forum_Store.cs" />
     <Compile Include="T_System_Messages.cs" />
     <Compile Include="T_User_BaseInfo.cs" />

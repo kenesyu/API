@@ -478,5 +478,25 @@ namespace WebApi.Areas.Trading.Controllers
             List<WebApi_Model.T_Forum_Store> list = bll.GetModelList("UID=" + UID);
             return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
         }
+
+        [HttpPost]
+        public IHttpActionResult AddForumLike()
+        {
+            WebApi_BLL.T_Forum_Likes bll = new WebApi_BLL.T_Forum_Likes();
+            int UID = int.Parse(requestHelper.GetRequsetForm("UID", ""));
+            int ForumID = int.Parse(requestHelper.GetRequsetForm("ForumID", ""));
+
+            WebApi_Model.T_Forum_Likes model = new WebApi_Model.T_Forum_Likes();
+            bll.Add(model);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", true));
+        }
+
+        [HttpGet]
+        public IHttpActionResult CheckForumLike(int UID, int ForumID)
+        {
+            WebApi_BLL.T_Forum_Likes bll = new WebApi_BLL.T_Forum_Likes();
+            List<WebApi_Model.T_Forum_Likes> list = bll.GetModelList("UID=" + UID + " and ForumID=" + ForumID);
+            return Ok(ReturnJsonResult.GetJsonResult(1, "OK", JsonConvert.SerializeObject(list)));
+        }
     }
 }
